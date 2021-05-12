@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         }
         
         self.view.endEditing(true)
-        if binNum.contains("0") && binNum.contains("1"){
+        if binNum.contains("0") || binNum.contains("1"){
             if let decimalNum = Int(binNum, radix: 2){
                 lbDecimal.text = String(decimalNum)
             }
