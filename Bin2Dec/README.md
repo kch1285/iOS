@@ -29,6 +29,3 @@ constraints:
 
 -   [ ] User can enter a variable number of binary digits
 
-## Useful links and resources
-
-[Binary number system](https://en.wikipedia.org/wiki/Binary_number)
