@@ -1,0 +1,592 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		436FB0D52652624A008835D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436FB0D42652624A008835D0 /* AppDelegate.swift */; };
+		436FB0D72652624A008835D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436FB0D62652624A008835D0 /* SceneDelegate.swift */; };
+		436FB0D92652624A008835D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436FB0D82652624A008835D0 /* ViewController.swift */; };
+		436FB0DC2652624A008835D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436FB0DA2652624A008835D0 /* Main.storyboard */; };
+		436FB0DE2652624D008835D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 436FB0DD2652624D008835D0 /* Assets.xcassets */; };
+		436FB0E12652624D008835D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436FB0DF2652624D008835D0 /* LaunchScreen.storyboard */; };
+		436FB0EC2652624D008835D0 /* Christmas_LightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436FB0EB2652624D008835D0 /* Christmas_LightsTests.swift */; };
+		436FB0F72652624D008835D0 /* Christmas_LightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436FB0F62652624D008835D0 /* Christmas_LightsUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		436FB0E82652624D008835D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 436FB0C92652624A008835D0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 436FB0D02652624A008835D0;
+			remoteInfo = "Christmas Lights";
+		};
+		436FB0F32652624D008835D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 436FB0C92652624A008835D0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 436FB0D02652624A008835D0;
+			remoteInfo = "Christmas Lights";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		436FB0D12652624A008835D0 /* Christmas Lights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Christmas Lights.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		436FB0D42652624A008835D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		436FB0D62652624A008835D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		436FB0D82652624A008835D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		436FB0DB2652624A008835D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		436FB0DD2652624D008835D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		436FB0E02652624D008835D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		436FB0E22652624D008835D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		436FB0E72652624D008835D0 /* Christmas LightsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Christmas LightsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		436FB0EB2652624D008835D0 /* Christmas_LightsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Christmas_LightsTests.swift; sourceTree = "<group>"; };
+		436FB0ED2652624D008835D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		436FB0F22652624D008835D0 /* Christmas LightsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Christmas LightsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		436FB0F62652624D008835D0 /* Christmas_LightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Christmas_LightsUITests.swift; sourceTree = "<group>"; };
+		436FB0F82652624D008835D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		436FB0CE2652624A008835D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0E42652624D008835D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0EF2652624D008835D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		436FB0C82652624A008835D0 = {
+			isa = PBXGroup;
+			children = (
+				436FB0D32652624A008835D0 /* Christmas Lights */,
+				436FB0EA2652624D008835D0 /* Christmas LightsTests */,
+				436FB0F52652624D008835D0 /* Christmas LightsUITests */,
+				436FB0D22652624A008835D0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		436FB0D22652624A008835D0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				436FB0D12652624A008835D0 /* Christmas Lights.app */,
+				436FB0E72652624D008835D0 /* Christmas LightsTests.xctest */,
+				436FB0F22652624D008835D0 /* Christmas LightsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		436FB0D32652624A008835D0 /* Christmas Lights */ = {
+			isa = PBXGroup;
+			children = (
+				436FB0D42652624A008835D0 /* AppDelegate.swift */,
+				436FB0D62652624A008835D0 /* SceneDelegate.swift */,
+				436FB0D82652624A008835D0 /* ViewController.swift */,
+				436FB0DA2652624A008835D0 /* Main.storyboard */,
+				436FB0DD2652624D008835D0 /* Assets.xcassets */,
+				436FB0DF2652624D008835D0 /* LaunchScreen.storyboard */,
+				436FB0E22652624D008835D0 /* Info.plist */,
+			);
+			path = "Christmas Lights";
+			sourceTree = "<group>";
+		};
+		436FB0EA2652624D008835D0 /* Christmas LightsTests */ = {
+			isa = PBXGroup;
+			children = (
+				436FB0EB2652624D008835D0 /* Christmas_LightsTests.swift */,
+				436FB0ED2652624D008835D0 /* Info.plist */,
+			);
+			path = "Christmas LightsTests";
+			sourceTree = "<group>";
+		};
+		436FB0F52652624D008835D0 /* Christmas LightsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				436FB0F62652624D008835D0 /* Christmas_LightsUITests.swift */,
+				436FB0F82652624D008835D0 /* Info.plist */,
+			);
+			path = "Christmas LightsUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		436FB0D02652624A008835D0 /* Christmas Lights */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 436FB0FB2652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas Lights" */;
+			buildPhases = (
+				436FB0CD2652624A008835D0 /* Sources */,
+				436FB0CE2652624A008835D0 /* Frameworks */,
+				436FB0CF2652624A008835D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Christmas Lights";
+			productName = "Christmas Lights";
+			productReference = 436FB0D12652624A008835D0 /* Christmas Lights.app */;
+			productType = "com.apple.product-type.application";
+		};
+		436FB0E62652624D008835D0 /* Christmas LightsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 436FB0FE2652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas LightsTests" */;
+			buildPhases = (
+				436FB0E32652624D008835D0 /* Sources */,
+				436FB0E42652624D008835D0 /* Frameworks */,
+				436FB0E52652624D008835D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				436FB0E92652624D008835D0 /* PBXTargetDependency */,
+			);
+			name = "Christmas LightsTests";
+			productName = "Christmas LightsTests";
+			productReference = 436FB0E72652624D008835D0 /* Christmas LightsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		436FB0F12652624D008835D0 /* Christmas LightsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 436FB1012652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas LightsUITests" */;
+			buildPhases = (
+				436FB0EE2652624D008835D0 /* Sources */,
+				436FB0EF2652624D008835D0 /* Frameworks */,
+				436FB0F02652624D008835D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				436FB0F42652624D008835D0 /* PBXTargetDependency */,
+			);
+			name = "Christmas LightsUITests";
+			productName = "Christmas LightsUITests";
+			productReference = 436FB0F22652624D008835D0 /* Christmas LightsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		436FB0C92652624A008835D0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					436FB0D02652624A008835D0 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					436FB0E62652624D008835D0 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 436FB0D02652624A008835D0;
+					};
+					436FB0F12652624D008835D0 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 436FB0D02652624A008835D0;
+					};
+				};
+			};
+			buildConfigurationList = 436FB0CC2652624A008835D0 /* Build configuration list for PBXProject "Christmas Lights" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 436FB0C82652624A008835D0;
+			productRefGroup = 436FB0D22652624A008835D0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				436FB0D02652624A008835D0 /* Christmas Lights */,
+				436FB0E62652624D008835D0 /* Christmas LightsTests */,
+				436FB0F12652624D008835D0 /* Christmas LightsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		436FB0CF2652624A008835D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436FB0E12652624D008835D0 /* LaunchScreen.storyboard in Resources */,
+				436FB0DE2652624D008835D0 /* Assets.xcassets in Resources */,
+				436FB0DC2652624A008835D0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0E52652624D008835D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0F02652624D008835D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		436FB0CD2652624A008835D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436FB0D92652624A008835D0 /* ViewController.swift in Sources */,
+				436FB0D52652624A008835D0 /* AppDelegate.swift in Sources */,
+				436FB0D72652624A008835D0 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0E32652624D008835D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436FB0EC2652624D008835D0 /* Christmas_LightsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436FB0EE2652624D008835D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436FB0F72652624D008835D0 /* Christmas_LightsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		436FB0E92652624D008835D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 436FB0D02652624A008835D0 /* Christmas Lights */;
+			targetProxy = 436FB0E82652624D008835D0 /* PBXContainerItemProxy */;
+		};
+		436FB0F42652624D008835D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 436FB0D02652624A008835D0 /* Christmas Lights */;
+			targetProxy = 436FB0F32652624D008835D0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		436FB0DA2652624A008835D0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				436FB0DB2652624A008835D0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		436FB0DF2652624D008835D0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				436FB0E02652624D008835D0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		436FB0F92652624D008835D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		436FB0FA2652624D008835D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		436FB0FC2652624D008835D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas Lights/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-Lights";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		436FB0FD2652624D008835D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas Lights/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-Lights";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		436FB0FF2652624D008835D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas LightsTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-LightsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Christmas Lights.app/Christmas Lights";
+			};
+			name = Debug;
+		};
+		436FB1002652624D008835D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas LightsTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-LightsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Christmas Lights.app/Christmas Lights";
+			};
+			name = Release;
+		};
+		436FB1022652624D008835D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas LightsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-LightsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Christmas Lights";
+			};
+			name = Debug;
+		};
+		436FB1032652624D008835D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Christmas LightsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kch.Christmas-LightsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Christmas Lights";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		436FB0CC2652624A008835D0 /* Build configuration list for PBXProject "Christmas Lights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436FB0F92652624D008835D0 /* Debug */,
+				436FB0FA2652624D008835D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		436FB0FB2652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas Lights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436FB0FC2652624D008835D0 /* Debug */,
+				436FB0FD2652624D008835D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		436FB0FE2652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas LightsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436FB0FF2652624D008835D0 /* Debug */,
+				436FB1002652624D008835D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		436FB1012652624D008835D0 /* Build configuration list for PBXNativeTarget "Christmas LightsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436FB1022652624D008835D0 /* Debug */,
+				436FB1032652624D008835D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 436FB0C92652624A008835D0 /* Project object */;
+}
