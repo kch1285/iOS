@@ -1,5 +1,3 @@
-![Simulator Screen Shot - iPhone 12 Pro Max - 2021-05-17 at 18 02 32](https://user-images.githubusercontent.com/69520548/118462852-1435fa00-b73a-11eb-86a8-66c0f508c356.png)
-
 # Border-radius Previewer
 
 **Tier:** 1-Beginner
