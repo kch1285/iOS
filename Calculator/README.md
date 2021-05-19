@@ -45,3 +45,6 @@ currently displayed.
 allows floating point numbers up to 3 places to be entered and operations to
 be carried out to the maximum number of decimal places entered for any one
 number.
+
+<img width="375" alt="스크린샷 2021-05-12 오후 5 54 51" src="https://user-images.githubusercontent.com/69520548/118463113-5c551c80-b73a-11eb-816a-6b09ee2faeb4.png">
+
