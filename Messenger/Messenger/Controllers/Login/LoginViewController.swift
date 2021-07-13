@@ -74,11 +74,14 @@ class LoginViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(didTapRegister))
         
-        view.addSubview(scrollView)
+        idField.delegate = self
+        passwordField.delegate = self
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         scrollView.addSubview(imageView)
         scrollView.addSubview(idField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
+        view.addSubview(scrollView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,20 +95,37 @@ class LoginViewController: UIViewController {
         loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
     }
     
+    @objc private func loginButtonTapped(){
+        idField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
+        guard let id = idField.text, let password = passwordField.text, !id.isEmpty, !password.isEmpty, password.count >= 8 else {
+            alertUserLoginError()
+            return
+        }
+    }
+    
+    func alertUserLoginError() {
+        let alert = UIAlertController(title: "Woops", message: "Please enter all email information to log in", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
     @objc private func didTapRegister(){
         let vc = RegisterViewController()
         vc.title = "Create Account"
         navigationController?.pushViewController(vc, animated: true)
     }
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension LoginViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == idField{
+            passwordField.becomeFirstResponder()
+        }
+        else if textField == passwordField{
+            loginButtonTapped()
+        }
+        
+        return true
     }
-    */
-
 }
