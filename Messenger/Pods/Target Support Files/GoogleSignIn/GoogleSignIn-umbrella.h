@@ -1,23 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "GIDAuthentication.h"
-#import "GIDConfiguration.h"
-#import "GIDGoogleUser.h"
-#import "GIDProfileData.h"
-#import "GIDSignIn.h"
-#import "GIDSignInButton.h"
-#import "GoogleSignIn.h"
-
-FOUNDATION_EXPORT double GoogleSignInVersionNumber;
-FOUNDATION_EXPORT const unsigned char GoogleSignInVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:138a9620a5ad2e769ca6b48557515bde3be03b6fc8dd36d45139da1449d3a1e4
+size 503

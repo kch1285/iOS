@@ -1,31 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "FBSDKCoreKitImport.h"
-#import "FBSDKDeviceLoginCodeInfo.h"
-#import "FBSDKDeviceLoginManager.h"
-#import "FBSDKDeviceLoginManagerResult.h"
-#import "FBSDKLoginButton.h"
-#import "FBSDKLoginConfiguration.h"
-#import "FBSDKLoginConstants.h"
-#import "FBSDKLoginKit.h"
-#import "FBSDKLoginManager.h"
-#import "FBSDKLoginManagerLoginResult.h"
-#import "FBSDKLoginTooltipView.h"
-#import "FBSDKReferralCode.h"
-#import "FBSDKReferralManager.h"
-#import "FBSDKReferralManagerResult.h"
-#import "FBSDKTooltipView.h"
-
-FOUNDATION_EXPORT double FBSDKLoginKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char FBSDKLoginKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac30896eda05fee67a05fb7d7902ab3ef6823a49007b0d3ca693e6c0a1b76ffd
+size 823

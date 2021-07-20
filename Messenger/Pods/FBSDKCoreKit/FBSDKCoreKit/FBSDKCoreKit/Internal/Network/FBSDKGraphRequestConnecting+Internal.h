@@ -1,31 +1,3 @@
-// Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
-//
-// You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
-// copy, modify, and distribute this software in source code or binary form for use
-// in connection with the web services and APIs provided by Facebook.
-//
-// As with any software that integrates with the Facebook platform, your use of
-// this software is subject to the Facebook Developer Principles and Policies
-// [http://developers.facebook.com/policy/]. This copyright notice shall be
-// included in all copies or substantial portions of the software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-#if SWIFT_PACKAGE
- #import "FBSDKGraphRequestConnecting.h"
-#else
- #import <FBSDKCoreKit/FBSDKGraphRequestConnecting.h>
-#endif
-
-#import "FBSDKGraphRequestMetadata.h"
-
-@protocol _FBSDKGraphRequestConnecting <FBSDKGraphRequestConnecting>
-
-@property (nonatomic, readonly) NSMutableArray<FBSDKGraphRequestMetadata *> *requests;
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:b52a50d6b396d7c546f00468764be2c3d70421c1b1786ec5456e654ff43ed01c
+size 1423
