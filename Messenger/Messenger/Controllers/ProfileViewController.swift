@@ -13,7 +13,7 @@ import GoogleSignIn
 class ProfileViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
-    let data = ["Log Out"]
+    let data = ["로그아웃"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +42,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let alert = UIAlertController(title: "", message: "Are you sure?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: "로그아웃 하시겠어요?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Log out!", style: .destructive, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { [weak self] _ in
             guard let strongSelf = self else { return }
             
             FBSDKLoginKit.LoginManager().logOut()
@@ -64,7 +64,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     

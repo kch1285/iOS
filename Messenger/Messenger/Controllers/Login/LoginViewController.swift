@@ -9,8 +9,10 @@ import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let facebookLoginButton: FBLoginButton = {
         let button = FBLoginButton()
@@ -36,7 +38,7 @@ class LoginViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Email Address"
+        field.placeholder = "이메일"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         return field
@@ -50,7 +52,7 @@ class LoginViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Password"
+        field.placeholder = "비밀번호"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.isSecureTextEntry = true
@@ -59,7 +61,7 @@ class LoginViewController: UIViewController {
     
     private let loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Log in", for: .normal)
+        button.setTitle("로그인", for: .normal)
         button.backgroundColor = .link
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
@@ -90,9 +92,9 @@ class LoginViewController: UIViewController {
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
         
-        title = "Log In"
+        title = "치훈이 Messenger"
         view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "회원가입",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRegister))
@@ -137,6 +139,8 @@ class LoginViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         FirebaseAuth.Auth.auth().signIn(withEmail: id, password: password, completion: { [weak self] authResult, error in
             guard let result = authResult, error == nil else{
                 print("Log in Error !!!!")
@@ -150,15 +154,20 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
+            
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
     
     func alertUserLoginError() {
-        let alert = UIAlertController(title: "Woops", message: "Please enter all email information to log in", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: "오잉", message: "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
+    
     @objc private func didTapRegister(){
         let vc = RegisterViewController()
         vc.title = "Create Account"

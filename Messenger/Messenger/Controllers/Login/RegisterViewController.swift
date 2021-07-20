@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -24,7 +27,7 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "First Name"
+        field.placeholder = "성"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         return field
@@ -38,7 +41,7 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Last Name"
+        field.placeholder = "이름"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         return field
@@ -52,7 +55,7 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Email Address"
+        field.placeholder = "이메일"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         return field
@@ -66,7 +69,7 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Password"
+        field.placeholder = "비밀번호"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.isSecureTextEntry = true
@@ -75,7 +78,7 @@ class RegisterViewController: UIViewController {
     
     private let registerButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Register", for: .normal)
+        button.setTitle("회원가입하기", for: .normal)
         button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
@@ -99,9 +102,8 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        title = "Log In"
+        title = "회원가입"
         view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",style: .done,target: self,action: #selector(didTapRegister))
         
         idField.delegate = self
         passwordField.delegate = self
@@ -157,14 +159,20 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         DatabaseManager.shared.userExists(with: id, completion: { [weak self] exist in
             guard let strongSelf = self else{
                 return
             }
             
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
+            
             guard !exist else {
                 //User already exists
-                strongSelf.alertUserLoginError(message: "Looks like a user account for that email address already exists.")
+                strongSelf.alertUserLoginError(message: "이미 사용중인 이메일입니다.")
                 return
             }
             
@@ -181,16 +189,12 @@ class RegisterViewController: UIViewController {
         
     }
     
-    func alertUserLoginError(message: String = "Please enter all email information to create a new account.") {
-        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+    func alertUserLoginError(message: String = "회원가입을 위해 모든 정보를 입력해주세요.") {
+        let alert = UIAlertController(title: "오잉", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
-    @objc private func didTapRegister(){
-        let vc = RegisterViewController()
-        vc.title = "Create Account"
-        navigationController?.pushViewController(vc, animated: true)
-    }
+
 }
 
 extension RegisterViewController: UITextFieldDelegate{
@@ -210,10 +214,10 @@ extension RegisterViewController: UITextFieldDelegate{
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     func presentPhotoActionSheet(){
-        let actionSheet = UIAlertController(title: "Profile Picture", message: "How would you like to select a picture?", preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in self?.presentCamera() }))
-        actionSheet.addAction(UIAlertAction(title: "Choose Photo", style: .default, handler: { [weak self] _ in self?.presentPhotoPicker() }))
+        let actionSheet = UIAlertController(title: "프로필 사진", message: "프로필 사진 설정을 위한 방법을 선택해 주세요.", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "사진 찍기", style: .default, handler: { [weak self] _ in self?.presentCamera() }))
+        actionSheet.addAction(UIAlertAction(title: "라이브러리에서 선택", style: .default, handler: { [weak self] _ in self?.presentPhotoPicker() }))
         
         present(actionSheet, animated: true)
     }
