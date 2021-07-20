@@ -142,14 +142,6 @@ class LoginViewController: UIViewController {
         spinner.show(in: view)
         
         FirebaseAuth.Auth.auth().signIn(withEmail: id, password: password, completion: { [weak self] authResult, error in
-            guard let result = authResult, error == nil else{
-                print("Log in Error !!!!")
-                return
-            }
-            
-            let user = result.user
-            print("log in !!!!! : \(user)")
-            
             guard let strongSelf = self else{
                 return
             }
@@ -157,6 +149,15 @@ class LoginViewController: UIViewController {
             DispatchQueue.main.async {
                 strongSelf.spinner.dismiss()
             }
+            
+            guard let result = authResult, error == nil else{
+                print("Log in Error !!!!")
+                self?.alertUserLoginError()
+                return
+            }
+            
+            let user = result.user
+            print("log in !!!!! : \(user)")
             
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
@@ -199,7 +200,7 @@ extension LoginViewController: LoginButtonDelegate {
         }
         
         let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-                                                         parameters: ["fields": "email, name"],
+                                                         parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
                                                          tokenString: token,
                                                          version: nil,
                                                          httpMethod: .get)
@@ -208,21 +209,44 @@ extension LoginViewController: LoginButtonDelegate {
                 print("Failed to make facebook graph request !!!")
                 return
             }
-            print("\(result)")
+            print(result)
             
-            guard let userName = result["name"] as? String,
-                  let email = result["email"] as? String else {
+            guard let firstName = result["first_name"] as? String,
+                  let lastName = result["last_name"] as? String,
+                  let email = result["email"] as? String,
+                  let picture = result["picture"] as? [String: Any],
+                  let data = picture["data"] as? [String: Any],
+                  let pictureUrl = data["url"] as? String else {
                 return
             }
             
-            let firstNameIdx = userName.index(userName.startIndex, offsetBy: 0)
-            let lastNameIdx = userName.index(userName.startIndex, offsetBy: 1)
-            let firstName = String(userName[...firstNameIdx])
-            let lastName = String(userName[lastNameIdx...])
-            
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
-                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                    let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
+                    DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+                        if success {
+                            guard let url = URL(string: pictureUrl) else {
+                                return
+                            }
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                                guard let data = data else {
+                                    return
+                                }
+                                
+                                let fileName = chatUser.profilePictureFileName
+                                StorageManeger.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage manager error \(error) !!!")
+                                    }
+                                })
+                            }).resume()
+                        }
+                    })
                 }
             })
             

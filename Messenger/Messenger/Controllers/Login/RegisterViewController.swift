@@ -47,7 +47,7 @@ class RegisterViewController: UIViewController {
         return field
     }()
     
-    private let idField: UITextField = {
+    private let emailField: UITextField = {
         let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -105,7 +105,7 @@ class RegisterViewController: UIViewController {
         title = "회원가입"
         view.backgroundColor = .white
         
-        idField.delegate = self
+        emailField.delegate = self
         passwordField.delegate = self
         
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
@@ -119,7 +119,7 @@ class RegisterViewController: UIViewController {
         scrollView.addSubview(imageView)
         scrollView.addSubview(firstNameField)
         scrollView.addSubview(lastNameField)
-        scrollView.addSubview(idField)
+        scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(registerButton)
     }
@@ -133,8 +133,8 @@ class RegisterViewController: UIViewController {
         imageView.layer.cornerRadius = imageView.width / 2
         firstNameField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
         lastNameField.frame = CGRect(x: 30, y: firstNameField.bottom + 10, width: scrollView.width - 60, height: 52)
-        idField.frame = CGRect(x: 30, y: lastNameField.bottom + 10, width: scrollView.width - 60, height: 52)
-        passwordField.frame = CGRect(x: 30, y: idField.bottom + 10, width: scrollView.width - 60, height: 52)
+        emailField.frame = CGRect(x: 30, y: lastNameField.bottom + 10, width: scrollView.width - 60, height: 52)
+        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
         registerButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
     }
     
@@ -143,16 +143,16 @@ class RegisterViewController: UIViewController {
     }
     
     @objc private func registerButtonTapped(){
-        idField.resignFirstResponder()
+        emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         firstNameField.resignFirstResponder()
         lastNameField.resignFirstResponder()
         
         guard let firstName = firstNameField.text,
               let lastName = lastNameField.text,
-              let id = idField.text,
+              let email = emailField.text,
               let password = passwordField.text,
-              !id.isEmpty, !password.isEmpty,
+              !email.isEmpty, !password.isEmpty,
               !firstName.isEmpty, !lastName.isEmpty,
               password.count >= 8 else {
             alertUserLoginError()
@@ -161,7 +161,7 @@ class RegisterViewController: UIViewController {
         
         spinner.show(in: view)
         
-        DatabaseManager.shared.userExists(with: id, completion: { [weak self] exist in
+        DatabaseManager.shared.userExists(with: email, completion: { [weak self] exist in
             guard let strongSelf = self else{
                 return
             }
@@ -176,12 +176,29 @@ class RegisterViewController: UIViewController {
                 return
             }
             
-            FirebaseAuth.Auth.auth().createUser(withEmail: id, password: password, completion: { authResult, error  in
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error  in
                 guard authResult != nil, error == nil else{
                     print("Create Error")
                     return
                 }
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: id))
+                let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+                    if success {
+                        guard let image = strongSelf.imageView.image, let data = image.pngData() else {
+                            return
+                        }
+                        let fileName = chatUser.profilePictureFileName
+                        StorageManeger.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                print(downloadUrl)
+                            case .failure(let error):
+                                print("Storage manager error \(error) !!!")
+                            }
+                        })
+                    }
+                })
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
         })
@@ -194,12 +211,12 @@ class RegisterViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
-
+    
 }
 
 extension RegisterViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == idField{
+        if textField == emailField{
             passwordField.becomeFirstResponder()
         }
         else if textField == passwordField{
