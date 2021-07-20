@@ -24,5 +24,7 @@ pod 'Firebase/Database'
 # Facebook
 pod 'FBSDKLoginKit'
 
-
+# Google
+# pod 'GoogleSignIn'
+pod 'GoogleSignIn', '~> 5.0'
 end

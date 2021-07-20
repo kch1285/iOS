@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class LoginViewController: UIViewController {
         
         return button
     }()
+    
+    private let googleLoginButton = GIDSignInButton()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -72,10 +75,21 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
+    private var loginObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        GIDSignIn.sharedInstance().presentingViewController = self
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLoginNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else{
+                return
+            }
+            
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
+        
         title = "Log In"
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
@@ -92,9 +106,15 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookLoginButton)
+        scrollView.addSubview(googleLoginButton)
         view.addSubview(scrollView)
     }
     
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
@@ -105,7 +125,7 @@ class LoginViewController: UIViewController {
         passwordField.frame = CGRect(x: 30, y: idField.bottom + 10, width: scrollView.width - 60, height: 52)
         loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
         facebookLoginButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width - 60, height: 52)
-        facebookLoginButton.frame.origin.y = loginButton.bottom + 20
+        googleLoginButton.frame = CGRect(x: 30, y: facebookLoginButton.bottom + 10, width: scrollView.width - 60, height: 52)
     }
     
     @objc private func loginButtonTapped(){
@@ -185,7 +205,7 @@ extension LoginViewController: LoginButtonDelegate {
                   let email = result["email"] as? String else {
                 return
             }
-
+            
             let firstNameIdx = userName.index(userName.startIndex, offsetBy: 0)
             let lastNameIdx = userName.index(userName.startIndex, offsetBy: 1)
             let firstName = String(userName[...firstNameIdx])
