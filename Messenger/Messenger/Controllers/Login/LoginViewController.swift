@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     }()
     
     
-    private let idField: UITextField = {
+    private let emailField: UITextField = {
         let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -99,12 +99,12 @@ class LoginViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(didTapRegister))
         
-        idField.delegate = self
+        emailField.delegate = self
         passwordField.delegate = self
         facebookLoginButton.delegate = self
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         scrollView.addSubview(imageView)
-        scrollView.addSubview(idField)
+        scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookLoginButton)
@@ -123,25 +123,25 @@ class LoginViewController: UIViewController {
         let size = scrollView.width / 3
         
         imageView.frame = CGRect(x: (scrollView.width - size) / 2, y: 20, width: size, height: size)
-        idField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
-        passwordField.frame = CGRect(x: 30, y: idField.bottom + 10, width: scrollView.width - 60, height: 52)
+        emailField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
+        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
         loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
         facebookLoginButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width - 60, height: 52)
         googleLoginButton.frame = CGRect(x: 30, y: facebookLoginButton.bottom + 10, width: scrollView.width - 60, height: 52)
     }
     
     @objc private func loginButtonTapped(){
-        idField.resignFirstResponder()
+        emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         
-        guard let id = idField.text, let password = passwordField.text, !id.isEmpty, !password.isEmpty, password.count >= 8 else {
+        guard let email = emailField.text, let password = passwordField.text, !email.isEmpty, !password.isEmpty, password.count >= 8 else {
             alertUserLoginError()
             return
         }
         
         spinner.show(in: view)
         
-        FirebaseAuth.Auth.auth().signIn(withEmail: id, password: password, completion: { [weak self] authResult, error in
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
             guard let strongSelf = self else{
                 return
             }
@@ -158,7 +158,7 @@ class LoginViewController: UIViewController {
             
             let user = result.user
             print("log in !!!!! : \(user)")
-            
+            UserDefaults.standard.set(email, forKey: "email")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
@@ -178,7 +178,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == idField{
+        if textField == emailField{
             passwordField.becomeFirstResponder()
         }
         else if textField == passwordField{
@@ -219,6 +219,8 @@ extension LoginViewController: LoginButtonDelegate {
                   let pictureUrl = data["url"] as? String else {
                 return
             }
+            
+            UserDefaults.standard.set(email, forKey: "email")
             
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
