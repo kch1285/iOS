@@ -27,6 +27,7 @@
 		438246FA26A164AD006A37E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 438246F926A164AD006A37E6 /* GoogleService-Info.plist */; };
 		43BADF2726A6A43F0027EBE5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BADF2626A6A43F0027EBE5 /* ChatViewController.swift */; };
 		43BADF2926A6C4B30027EBE5 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BADF2826A6C4B30027EBE5 /* StorageManager.swift */; };
+		43BADF2B26AE81500027EBE5 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BADF2A26AE814F0027EBE5 /* ConversationTableViewCell.swift */; };
 		43C5B14226A18A7500E10A3E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5B14126A18A7500E10A3E /* DatabaseManager.swift */; };
 		56C4EC30871A1FF25B8CC44C /* Pods_Messenger_MessengerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7C34281A0DD61019D4B800 /* Pods_Messenger_MessengerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		438246F926A164AD006A37E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43BADF2626A6A43F0027EBE5 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		43BADF2826A6C4B30027EBE5 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		43BADF2A26AE814F0027EBE5 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		43C5B14126A18A7500E10A3E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		44E04A7D4D570E32C5471306 /* Pods-MessengerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerTests.release.xcconfig"; path = "Target Support Files/Pods-MessengerTests/Pods-MessengerTests.release.xcconfig"; sourceTree = "<group>"; };
 		8277963D9BA85A3AD2E5F538 /* Pods-MessengerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerTests.debug.xcconfig"; path = "Target Support Files/Pods-MessengerTests/Pods-MessengerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				434086F2269C1E1700A56DC7 /* Storyboards */,
 				434086C6269C1BFE00A56DC7 /* Assets.xcassets */,
+				43BADF2A26AE814F0027EBE5 /* ConversationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				434086BE269C1BFC00A56DC7 /* AppDelegate.swift in Sources */,
 				43408702269C204600A56DC7 /* ProfileViewController.swift in Sources */,
 				434086C0269C1BFC00A56DC7 /* SceneDelegate.swift in Sources */,
+				43BADF2B26AE81500027EBE5 /* ConversationTableViewCell.swift in Sources */,
 				43BADF2726A6A43F0027EBE5 /* ChatViewController.swift in Sources */,
 				434086FC269C200600A56DC7 /* PhotoViewerViewController.swift in Sources */,
 				43BADF2926A6C4B30027EBE5 /* StorageManager.swift in Sources */,

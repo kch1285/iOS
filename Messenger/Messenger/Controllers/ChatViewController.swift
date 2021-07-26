@@ -57,19 +57,25 @@ class ChatViewController: MessagesViewController {
         formatter.locale = .current
         return formatter
     }()
+    
     public var isNewConversation = false
     public let otherUserEmail: String
+    private var conversationId: String?
     private var messages = [Message]()
+    
     private var selfSender: Sender? {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
-         
-        return Sender(photoURL: "", senderId: email, displayName: "강치훈이야")
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        return Sender(photoURL: "", senderId: safeEmail, displayName: "강치훈이야")
     }
     
-    init(with email: String) {
+    
+    
+    init(with email: String, id: String?) {
         self.otherUserEmail = email
+        self.conversationId = id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -91,8 +97,30 @@ class ChatViewController: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         messageInputBar.inputTextView.becomeFirstResponder()
+        if let conversationId = conversationId {
+            listenForMessages(id: conversationId, shouldScrollToBottom: true)
+        }
     }
 
+    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+        DatabaseManager.shared.getAllMessagesForConversation(with: id, completion: { [weak self] result in
+            switch result {
+            case .success(let messages):
+                guard !messages.isEmpty else {
+                    return
+                }
+                self?.messages = messages
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+                    if shouldScrollToBottom {
+                        self?.messagesCollectionView.scrollToLastItem()
+                    }
+                }
+            case .failure(let error):
+                print("Failed to get messages: \(error)")
+            }
+        })
+    }
     /*
     // MARK: - Navigation
 
@@ -111,12 +139,17 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
               let selfSender = self.selfSender, let messageId = createMessageId() else {
             return
         }
+        let message = Message(sender: selfSender, messageId: messageId, sentDate: Date(), kind: .text(text))
         
         if isNewConversation {
-            let message = Message(sender: selfSender, messageId: messageId, sentDate: Date(), kind: .text(text))
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, firstMessage: message, completion: { success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "nil", firstMessage: message, completion: { [weak self] success in
                 if success {
                     print("success")
+                    self?.isNewConversation = false
+                    let newConversationId = "conversation_\(message.messageId)"
+                    self?.conversationId = newConversationId
+                    self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
+                    self?.messageInputBar.inputTextView.text = nil
                 }
                 else {
                     print("fail")
@@ -124,7 +157,18 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             })
         }
         else {
-            
+            guard let conversationId = conversationId, let name = self.title else {
+                return
+            }
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: { [weak self] success in
+                if success {
+                    print("메세지 보냄")
+                    self?.messageInputBar.inputTextView.text = nil
+                }
+                else {
+                    print("메세지 보냄 실패")
+                }
+            })
         }
     }
     
@@ -146,7 +190,6 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
             return sender
         }
         fatalError("Self Sender is nil, email should be cashed !!!")
-        return Sender(photoURL: "", senderId: "", displayName: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
