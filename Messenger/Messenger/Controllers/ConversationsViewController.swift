@@ -89,6 +89,7 @@ class ConversationsViewController: UIViewController {
                 }
                 
                 self?.conversations = conversations
+                
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
@@ -138,7 +139,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         let model = conversations[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.identifier, for: indexPath) as! ConversationTableViewCell
         cell.configure(with: model)
-        cell.accessoryType = .disclosureIndicator
+       // cell.accessoryType = .disclosureIndicator
         return cell
     }
     

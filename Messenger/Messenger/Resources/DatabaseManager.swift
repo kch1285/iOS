@@ -7,7 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
-
+import MessageKit
 
 final class DatabaseManager {
     
@@ -322,7 +322,6 @@ extension DatabaseManager {
     public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<[Message], Error>) -> Void) {
         print("id는 이거다@@@@ - \(id)")
         database.child("\(id)/message").observeSingleEvent(of: .value, with: { snapshot in
-            print("getAllMessagesForConversation 시작")
             guard let value = snapshot.value as? [[String: Any]] else {
                 completion(.failure(DatabaseError.faileToFetch))
                 return
@@ -339,10 +338,26 @@ extension DatabaseManager {
                       let date = ChatViewController.dateFormatter.date(from: dateString) else {
                     return nil
                 }
-                print("getAllMessagesForConversation 성공")
+                
+                var kind: MessageKind?
+                if type == "photo" {
+                    guard let imageUrl = URL(string: content), let placeholder = UIImage(systemName: "photo") else {
+                        return nil
+                    }
+                    let media = Media(url: imageUrl, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .photo(media)
+                }
+                else {
+                    kind = .text(content)
+                }
+                
+                guard let finalKind = kind else {
+                    return nil
+                }
+                
                 let sender = Sender(photoURL: "", senderId: senderEmail, displayName: name)
                 
-                return Message(sender: sender, messageId: messageId, sentDate: date, kind: .text(content))
+                return Message(sender: sender, messageId: messageId, sentDate: date, kind: finalKind)
             })
             completion(.success(messages))
         })
@@ -372,7 +387,10 @@ extension DatabaseManager {
                 message = messageText
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+                if let targetUrlString = mediaItem.url?.absoluteString {
+                    message = targetUrlString
+                }
                 break
             case .video(_):
                 break
@@ -397,9 +415,11 @@ extension DatabaseManager {
                 return
             }
             let currentUserEmail = DatabaseManager.safeEmail(emailAddress: myEmail)
+            
             let newMessageEntry: [String: Any] = ["id": newMessage.messageId, "type": newMessage.kind.messageKindString, "content": message, "date": dateString, "sender_email": currentUserEmail, "is_read": false, "name": name]
             
             currentMessage.append(newMessageEntry)
+            
             strongSelf.database.child("\(conversation)/message").setValue(currentMessage, withCompletionBlock: { error, _ in
                 guard error == nil else {
                     completion(false)
