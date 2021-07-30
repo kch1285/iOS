@@ -30,6 +30,7 @@ class RegisterViewController: UIViewController {
         field.placeholder = "이름"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -44,6 +45,7 @@ class RegisterViewController: UIViewController {
         field.placeholder = "성"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -58,6 +60,7 @@ class RegisterViewController: UIViewController {
         field.placeholder = "이메일"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -73,6 +76,7 @@ class RegisterViewController: UIViewController {
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.isSecureTextEntry = true
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -103,7 +107,7 @@ class RegisterViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         title = "회원가입"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         emailField.delegate = self
         passwordField.delegate = self

@@ -9,18 +9,56 @@ import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
+import SDWebImage
+
+struct ProfileViewModel {
+    let viewModelType: ProfileViewModelType
+    let title: String
+    let handler: (() -> Void)?
+}
+
+enum ProfileViewModelType {
+    case info, logout
+}
 
 class ProfileViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
-    let data = ["로그아웃"]
+    var data = [ProfileViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        data.append(ProfileViewModel(viewModelType: .info, title: "이름: \(UserDefaults.standard.value(forKey: "name") as? String ?? "이름이 없습니다.")", handler: nil))
+        data.append(ProfileViewModel(viewModelType: .info, title: "이메일: \(UserDefaults.standard.value(forKey: "email") as? String ?? "이메일이 없습니다.")", handler: nil))
+        data.append(ProfileViewModel(viewModelType: .logout, title: "로그아웃", handler: { [weak self] in
+            let alert = UIAlertController(title: "", message: "로그아웃 하시겠어요?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { [weak self] _ in
+                guard let strongSelf = self else { return }
+                
+                FBSDKLoginKit.LoginManager().logOut()
+                GIDSignIn.sharedInstance().signOut()
+                
+                do {
+                    try FirebaseAuth.Auth.auth().signOut()
+                    
+                    let vc = LoginViewController()
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    strongSelf.present(nav, animated: true )
+                }
+                catch {
+                    
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self?.present(alert, animated: true)
+        }))
         tableView.tableHeaderView = createTableHeader()
     }
     
@@ -46,28 +84,15 @@ class ProfileViewController: UIViewController {
         
         headerView.addSubview(imageView)
         
-        StorageManeger.shared.downloadUrl(for: path, completion: { [weak self] reuslt in
+        StorageManeger.shared.downloadUrl(for: path, completion: { reuslt in
             switch reuslt {
             case .success(let url):
-                self?.downloadImage(imageView: imageView, url: url)
+                imageView.sd_setImage(with: url, completed: nil)
             case .failure(let error):
                 print("Failed to get download url: \(error)")
             }
         })
         return headerView
-    }
-    
-    func downloadImage(imageView: UIImageView, url: URL) {
-        URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                imageView.image = image
-            }
-        }).resume()
     }
 }
 
@@ -77,41 +102,31 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        cell.textLabel?.textAlignment = .center
-        cell.textLabel?.textColor = .red
-        
+        let viewModel = data[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
+        cell.setUp(with: viewModel)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let alert = UIAlertController(title: "", message: "로그아웃 하시겠어요?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { [weak self] _ in
-            guard let strongSelf = self else { return }
-            
-            FBSDKLoginKit.LoginManager().logOut()
-            GIDSignIn.sharedInstance().signOut()
-            
-            do {
-                try FirebaseAuth.Auth.auth().signOut()
-                
-                let vc = LoginViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                strongSelf.present(nav, animated: true )
-                
-            }
-            catch {
-                
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        present(alert, animated: true)
+        data[indexPath.row].handler?()
     }
+}
+
+
+class ProfileTableViewCell: UITableViewCell {
+    static let identifier = "ProfileTableViewCell"
     
+    public func setUp(with viewModel: ProfileViewModel) {
+        self.textLabel?.text = viewModel.title
+        switch viewModel.viewModelType {
+        case .info:
+            self.textLabel?.textAlignment = .left
+            self.selectionStyle = .none
+        case .logout:
+            self.textLabel?.textColor = .red
+            self.textLabel?.textAlignment = .center
+        }
+    }
 }

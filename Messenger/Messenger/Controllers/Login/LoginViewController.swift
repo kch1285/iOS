@@ -41,6 +41,7 @@ class LoginViewController: UIViewController {
         field.placeholder = "이메일"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -56,6 +57,7 @@ class LoginViewController: UIViewController {
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.isSecureTextEntry = true
+        field.backgroundColor = .secondarySystemBackground
         return field
     }()
     
@@ -93,7 +95,7 @@ class LoginViewController: UIViewController {
         })
         
         title = "치훈이 Messenger"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "회원가입",
                                                             style: .done,
                                                             target: self,
