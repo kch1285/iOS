@@ -113,7 +113,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(googleLoginButton)
         view.addSubview(scrollView)
     }
-    
+
     deinit {
         if let observer = loginObserver {
             NotificationCenter.default.removeObserver(observer)
