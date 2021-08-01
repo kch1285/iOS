@@ -7,7 +7,25 @@
 		<key>Instagram.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>20</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>43EF313326B673890077CDB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43EF314926B6738B0077CDB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43EF315426B6738B0077CDB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
