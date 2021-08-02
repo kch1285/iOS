@@ -144,6 +144,9 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func didTapLoginButton() {
+        var email: String?
+        var userName: String?
+
         passwordField.resignFirstResponder()
         userNameEmailField.resignFirstResponder()
         
@@ -151,6 +154,26 @@ class LoginViewController: UIViewController {
               let password = passwordField.text, password.count >= 8 else {
             return
         }
+
+        if userNameEmail.contains("@"), userNameEmail.contains(".") {
+            email = userNameEmail
+        }
+        else {
+            userName = userNameEmail
+        }
+
+        AuthManager.shared.loginUser(userName: userName, email: email, password: password, completion: { [weak self] success in
+            DispatchQueue.main.async {
+                if success {
+                    self?.dismiss(animated: true, completion: nil)
+                }
+                else {
+                    let alert = UIAlertController(title: "", message: "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+        })
     }
     
     @objc private func didTapTermsButton() {
@@ -173,7 +196,8 @@ class LoginViewController: UIViewController {
     
     @objc private func didTapCreateNewAccountButton() {
         let vc = RegistrationViewController()
-        present(vc, animated: true, completion: nil)
+        vc.title = "회원가입"
+        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
     /*
