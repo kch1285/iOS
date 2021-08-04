@@ -8,14 +8,6 @@
 import Foundation
 import FirebaseStorage
 
-public struct UserPost {
-    let postType: UserPostType
-}
-
-enum UserPostType {
-    case photo, video
-}
-
 public class StorageManager {
     static let shared = StorageManager()
     
