@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import SafariServices
 
 struct SettingCellModel {
     let title: String
     let handler: (() -> Void)
+}
+
+enum SettingURLType {
+    case terms, privacy, help
 }
 
 final class SettingsViewController: UIViewController {
@@ -41,12 +46,72 @@ final class SettingsViewController: UIViewController {
     }
     
     private func configureModels() {
-        let section = [SettingCellModel(title: "로그아웃", handler: { [weak self] in
-            self?.didTapLogOut()
-        })]
-        data.append(section)
+        data.append([
+            SettingCellModel(title: "프로필 편집", handler: { [weak self] in
+                self?.didTapEditProfile()
+            }),
+            SettingCellModel(title: "친구 팔로우 및 초대", handler: { [weak self] in
+                self?.didTapFollowOrInviteFriends()
+            }),
+            SettingCellModel(title: "보관", handler: { [weak self] in
+                self?.didTapKeepPost()
+            })
+        ])
+        
+        data.append([
+            SettingCellModel(title: "이용 약관", handler: { [weak self] in
+                self?.openUrl(type: .terms)
+            }),
+            SettingCellModel(title: "개인정보 정책", handler: { [weak self] in
+                self?.openUrl(type: .privacy)
+            }),
+            SettingCellModel(title: "도움말", handler: { [weak self] in
+                self?.openUrl(type: .help)
+            })
+        ])
+        
+        data.append([
+            SettingCellModel(title: "로그아웃", handler: { [weak self] in
+                self?.didTapLogOut()
+            })
+        ])
     }
 
+    private func didTapEditProfile() {
+        let vc = EditProfileViewController()
+        vc.title = "프로필 편집"
+        let navVC = UINavigationController(rootViewController: vc)
+        navVC.modalPresentationStyle = .fullScreen
+
+        present(navVC, animated: true, completion: nil)
+    }
+    
+    private func didTapFollowOrInviteFriends() {
+        
+    }
+    
+    private func didTapKeepPost() {
+        
+    }
+    
+    private func openUrl(type: SettingURLType) {
+        let urlString: String
+        switch type {
+        case .terms:
+            urlString = "https://help.instagram.com/581066165581870"
+        case .privacy:
+            urlString = "https://help.instagram.com/519522125107875"
+        case .help:
+            urlString = "https://help.instagram.com/"
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true, completion: nil)
+    }
     
     private func didTapLogOut() {
         let alert = UIAlertController(title: nil, message: "로그아웃 하시겠어요?", preferredStyle: .alert)
@@ -74,16 +139,6 @@ final class SettingsViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -98,6 +153,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.section][indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
