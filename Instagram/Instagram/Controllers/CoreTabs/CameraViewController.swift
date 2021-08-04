@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraViewController: UIViewController {
 
@@ -13,9 +14,13 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
 
+    private func didTapTakePicture() {
+        
+    }
     /*
     // MARK: - Navigation
 

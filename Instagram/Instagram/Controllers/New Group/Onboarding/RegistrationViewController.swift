@@ -107,6 +107,9 @@ class RegistrationViewController: UIViewController {
             DispatchQueue.main.async {
                 if registered {
                     print("등록 완료 !")
+                    let vc = HomeViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else {
                     print("등록 실패 !")
