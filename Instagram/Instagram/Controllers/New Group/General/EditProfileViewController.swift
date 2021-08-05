@@ -32,7 +32,6 @@ final class EditProfileViewController: UIViewController {
         tableView.tableHeaderView = createTableHeaderView()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTapComplete))
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(didTapCancel))
         
         view.addSubview(tableView)

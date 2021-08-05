@@ -35,6 +35,7 @@ final class SettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        navigationController?.navigationBar.topItem?.title = ""
         configureModels()
         view.addSubview(tableView)
     }

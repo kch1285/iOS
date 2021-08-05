@@ -113,10 +113,13 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         if indexPath.section == 1 {
             let tabControlHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier, for: indexPath) as! ProfileTabsCollectionReusableView
+            
+            tabControlHeader.delegate = self
             return tabControlHeader
         }
         
         let profileHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier, for: indexPath) as! ProfileInfoHeaderCollectionReusableView
+        
         profileHeader.delegate = self
         return profileHeader
     }
@@ -126,7 +129,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return CGSize(width: collectionView.width, height: collectionView.height / 3)
         }
         
-        return CGSize(width: collectionView.width, height: 65)
+        return CGSize(width: collectionView.width, height: 50)
     }
 }
 
@@ -138,13 +141,23 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     }
     
     func profileHeaderDidTapFollwersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = FollowListViewController()
+        var mockData = [UserRelationship]()
+        for x in 0..<10 {
+            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .follow : .unfollow))
+        }
+        let vc = FollowListViewController(data: mockData)
+        vc.title = "아이디!!"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func profileHeaderDidTapFollwingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = FollowListViewController()
+        var mockData = [UserRelationship]()
+        for x in 0..<10 {
+            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .follow : .unfollow))
+        }
+        let vc = FollowListViewController(data: mockData)
+        vc.title = "아이디!!"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -156,5 +169,17 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
         navVC.modalPresentationStyle = .fullScreen
 
         present(navVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - ProfileTabsCollectionReusableViewDelegate
+
+extension ProfileViewController: ProfileTabsCollectionReusableViewDelegate {
+    func didTapGridTab() {
+        
+    }
+    
+    func didTapTaggedTab() {
+        
     }
 }

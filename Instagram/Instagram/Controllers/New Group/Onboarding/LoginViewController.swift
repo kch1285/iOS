@@ -10,6 +10,7 @@ import SafariServices
 
 struct Constants {
     static let cornerRadius: CGFloat = 8.0
+    static let padding: CGFloat = 8
 }
 
 class LoginViewController: UIViewController {

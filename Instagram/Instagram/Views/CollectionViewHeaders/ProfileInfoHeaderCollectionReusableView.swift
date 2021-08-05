@@ -101,9 +101,9 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         postsButton.frame = CGRect(x: profileImage.right, y: profileImageSize / 2.5 + 5, width: countsButtonWidth, height: buttonHeight).integral
         follwersButton.frame = CGRect(x: postsButton.right, y: profileImageSize / 2.5 + 5, width: countsButtonWidth, height: buttonHeight).integral
         followingButton.frame = CGRect(x: follwersButton.right, y: profileImageSize / 2.5 + 5, width: countsButtonWidth, height: buttonHeight).integral
-        editProfileButton.frame = CGRect(x: 5, y: profileImage.bottom + buttonHeight, width: width, height: buttonHeight)
-        nameLabel.frame = CGRect(x: 5, y: profileImage.bottom + 5, width: width, height: 20)
-        bioLabel.frame = CGRect(x: 5, y: nameLabel.bottom + 5, width: width, height: bioLabelSize.height)
+        editProfileButton.frame = CGRect(x: 5, y: profileImage.bottom + buttonHeight, width: width, height: buttonHeight / 1.5).integral
+        nameLabel.frame = CGRect(x: 5, y: profileImage.bottom + 5, width: width, height: 20).integral
+        bioLabel.frame = CGRect(x: 5, y: nameLabel.bottom + 5, width: width, height: bioLabelSize.height).integral
     }
     
     private func addSubviews() {

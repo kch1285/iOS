@@ -9,10 +9,20 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
 
+    private lazy var noNotificationView = NoNotificationView()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
+        tableView.isHidden = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
+    }()
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.tintColor = .label
+        return spinner
     }()
     
     override func viewDidLoad() {
@@ -24,24 +34,25 @@ class NotificationsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        view.addSubview(spinner)
+     //   spinner.startAnimating()
         view.addSubview(tableView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         tableView.frame = view.bounds
+        spinner.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        spinner.center = view.center
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    private func layoutNoNotificationView() {
+        tableView.isHidden = true
+        view.addSubview(tableView)
+        noNotificationView.frame = CGRect(x: 0, y: 0, width: view.width / 2, height: view.width / 4)
+        noNotificationView.center = view.center
     }
-    */
-
 }
 
 extension NotificationsViewController: UITableViewDelegate, UITableViewDataSource {
