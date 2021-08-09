@@ -72,9 +72,9 @@ extension FollowListViewController: UITableViewDelegate, UITableViewDataSource {
 extension FollowListViewController: UserFollowTableViewCellDelegate {
     func didTapFollowUnfollowButton(model: UserRelationship) {
         switch model.type {
-        case .follow:
+        case .following:
             break
-        case .unfollow:
+        case .unfollowing:
             break
         }
     }

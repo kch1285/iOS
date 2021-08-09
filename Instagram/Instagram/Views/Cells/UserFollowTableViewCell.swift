@@ -12,7 +12,7 @@ protocol UserFollowTableViewCellDelegate: AnyObject {
 }
 
 enum FollowState {
-    case follow, unfollow
+    case following, unfollowing
 }
 
 struct UserRelationship {
@@ -79,7 +79,6 @@ class UserFollowTableViewCell: UITableViewCell {
     }
     
     private func addSubviews() {
-        
         contentView.addSubview(profileImageView)
         contentView.addSubview(idLabel)
         contentView.addSubview(nameLabel)
@@ -131,12 +130,12 @@ class UserFollowTableViewCell: UITableViewCell {
         idLabel.text = model.id
         nameLabel.text = model.name
         switch model.type {
-        case .follow:
+        case .following:
             followButton.setTitle("팔로잉", for: .normal)
             followButton.setTitleColor(.label, for: .normal)
             followButton.layer.borderWidth = 1
             followButton.layer.borderColor = UIColor.darkGray.cgColor
-        case .unfollow:
+        case .unfollowing:
             followButton.setTitle("팔로우", for: .normal)
             followButton.setTitleColor(.white, for: .normal)
             followButton.backgroundColor = .link

@@ -143,7 +143,7 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     func profileHeaderDidTapFollwersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         var mockData = [UserRelationship]()
         for x in 0..<10 {
-            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .follow : .unfollow))
+            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .following : .unfollowing))
         }
         let vc = FollowListViewController(data: mockData)
         vc.title = "아이디!!"
@@ -154,7 +154,7 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     func profileHeaderDidTapFollwingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         var mockData = [UserRelationship]()
         for x in 0..<10 {
-            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .follow : .unfollow))
+            mockData.append(UserRelationship(id: "chuny", name: "강치훈", type: x % 2 == 0 ? .following : .unfollowing))
         }
         let vc = FollowListViewController(data: mockData)
         vc.title = "아이디!!"
