@@ -17,6 +17,7 @@ public struct UserPost {
     let comments: [PostComment]
     let createdDate: Date
     let taggedUsers: [String]
+    let owner: User
 }
 
 struct User {
@@ -58,6 +59,6 @@ struct PostComment {
     let likes: [CommentLike]
 }
 
-enum UserPostType {
-    case photo, video
+enum UserPostType: String {
+    case photo = "사진", video = "동영상"
 }

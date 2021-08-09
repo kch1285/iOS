@@ -70,12 +70,15 @@ final class NotificationsViewController: UIViewController {
     }
     
     private func fetchNotifications() {
-        let post = UserPost(identifier: "", postType: .photo, thumbnailImage: URL(string: "www.naver.com")!, postUrl: URL(string: "www.naver.com")!, caption: nil, likes: [], comments: [], createdDate: Date(), taggedUsers: [])
+        let user = User(userName: "강치훈", bio: "", name: (first: "", last: ""),
+                        birthDate: Date(), gender: .male, counts: UserCount(followers: 1, following: 1, posts: 1),
+                        joinedDate: Date(), profilePicture: URL(string: "www.naver.com")!)
+        let post = UserPost(identifier: "", postType: .photo, thumbnailImage: URL(string: "www.naver.com")!,
+                            postUrl: URL(string: "www.naver.com")!, caption: nil, likes: [], comments: [],
+                            createdDate: Date(), taggedUsers: [], owner: user)
         for x in 0...100 {
             let model = UserNotification(type: x % 2 == 0 ? .like(post: post) : .follow(state: .unfollowing), text: "Hello World",
-                                         user: User(userName: "강치훈", bio: "", name: (first: "", last: ""),
-                                                    birthDate: Date(), gender: .male, counts: UserCount(followers: 1, following: 1, posts: 1),
-                                                    joinedDate: Date(), profilePicture: URL(string: "www.naver.com")!))
+                                         user: user)
             
             models.append(model)
         }
@@ -109,7 +112,16 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension NotificationsViewController: NotificationLikeEventTableViewCellDelegate {
     func didTapRelatedPostButton(model: UserNotification) {
-        print("didTapRelatedPostButton")
+        switch model.type {
+        case .follow(_):
+            fatalError()
+        case .like(let post):
+            let vc = PostViewController(model: post)
+            vc.title = post.postType.rawValue
+            navigationItem.largeTitleDisplayMode = .never
+            navigationController?.navigationBar.topItem?.title = ""
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

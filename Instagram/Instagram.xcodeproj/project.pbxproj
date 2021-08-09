@@ -266,7 +266,7 @@
 		43EF316726B673FA0077CDB2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				43EF317526B6754F0077CDB2 /* Others */,
+				43EF317526B6754F0077CDB2 /* Other */,
 				43EF317426B6751C0077CDB2 /* CoreTabs */,
 			);
 			path = Controllers;
@@ -327,13 +327,13 @@
 			path = CoreTabs;
 			sourceTree = "<group>";
 		};
-		43EF317526B6754F0077CDB2 /* Others */ = {
+		43EF317526B6754F0077CDB2 /* Other */ = {
 			isa = PBXGroup;
 			children = (
 				43EF317626B675640077CDB2 /* Onboarding */,
 				439FC9B126B682CB0095DF8C /* General */,
 			);
-			name = Others;
+			name = Other;
 			path = "New Group";
 			sourceTree = "<group>";
 		};
