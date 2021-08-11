@@ -65,8 +65,8 @@ class UserFollowTableViewCell: UITableViewCell {
     private let dotButton: UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
-        button.backgroundColor = .systemBackground
-        button.setTitle("•••", for: .normal)
+        button.tintColor = .label
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         return button
     }()
     

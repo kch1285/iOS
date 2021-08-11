@@ -131,6 +131,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch headerModel.renderType {
             case .header(let user):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostHeaderTableViewCell.idenrifier, for: indexPath) as! IGFeedPostHeaderTableViewCell
+                cell.configure(with: user)
+                cell.delegate = self
                 return cell
             case .actions, .comments, .primaryContent:
                 return UITableViewCell()
@@ -143,6 +145,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch postModel.renderType {
             case .primaryContent(let post):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.idenrifier, for: indexPath) as! IGFeedPostTableViewCell
+                cell.configure(with: post)
                 return cell
             case .actions, .comments, .header:
                 return UITableViewCell()
@@ -155,6 +158,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch actionModel.renderType {
             case .actions(let actions):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostActionTableViewCell.idenrifier, for: indexPath) as! IGFeedPostActionTableViewCell
+                cell.delegate = self
                 return cell
             case .header, .comments, .primaryContent:
                 return UITableViewCell()
@@ -183,7 +187,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let subSection = indexPath.section % 4
         
         if subSection == 0 {
-            return 70
+            return 60
         }
         else if subSection == 1 {
             return tableView.width
@@ -204,5 +208,39 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let subSection = section % 4
         return subSection == 3 ? 70 : 0
+    }
+}
+
+extension HomeViewController: IGFeedPostHeaderTableViewCellDelegate {
+    func didTapDotButton() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { [weak self] _ in
+            self?.reportPost()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "링크 복사", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "공유 대상...", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "게시물 알림 설정", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "숨기기", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "팔로우 취소", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .destructive, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func reportPost() {
+        
+    }
+}
+
+extension HomeViewController: IGFeedPostActionTableViewCellDelegate {
+    func didTapLikeButton() {
+        
+    }
+    
+    func didTapCommentButton() {
+        
+    }
+    
+    func didTapSendButton() {
+        
     }
 }
