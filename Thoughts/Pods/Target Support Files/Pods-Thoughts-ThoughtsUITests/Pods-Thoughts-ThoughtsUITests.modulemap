@@ -1,0 +1,6 @@
+framework module Pods_Thoughts_ThoughtsUITests {
+  umbrella header "Pods-Thoughts-ThoughtsUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
