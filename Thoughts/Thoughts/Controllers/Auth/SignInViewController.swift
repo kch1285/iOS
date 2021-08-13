@@ -13,6 +13,8 @@ class SignInViewController: UITabBarController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = "로그인"
+        view.backgroundColor = .link
     }
     
 

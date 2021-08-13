@@ -13,6 +13,8 @@ class SignUpViewController: UITabBarController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = "회원가입"
+        view.backgroundColor = .red
     }
     
 
