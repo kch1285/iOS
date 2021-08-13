@@ -15,8 +15,8 @@ final class IAPManager {
         
     }
     
-    func isPremium() {
-        
+    func isPremium() -> Bool {
+        return false
     }
     
     func subscribe() {

@@ -15,6 +15,15 @@ class SignInViewController: UITabBarController {
         // Do any additional setup after loading the view.
         title = "로그인"
         view.backgroundColor = .link
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            if !IAPManager.shared.isPremium() {
+                let vc = PayWallViewController()
+                let navVC = UINavigationController(rootViewController: vc)
+                
+                self.present(navVC, animated: true, completion: nil)
+            }
+        }
     }
     
 
