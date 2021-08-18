@@ -9,6 +9,14 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
+    private let SignInWithSpotifyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("로그인하기", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        return button
+    }()
+    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -25,13 +33,32 @@ class WelcomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
+        SignInWithSpotifyButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        
         view.addSubview(welcomeLabel)
+        view.addSubview(SignInWithSpotifyButton)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let labelHeight: CGFloat = view.frame.height / 5
-        welcomeLabel.frame = CGRect(x: 0, y: view.safeAreaInsets.top + labelHeight, width: view.frame.width, height: labelHeight)
+        let labelHeight: CGFloat = view.height / 5
+        welcomeLabel.frame = CGRect(x: 0, y: view.safeAreaInsets.top + labelHeight, width: view.width, height: labelHeight)
+        SignInWithSpotifyButton.frame = CGRect(x: 20, y: view.height - 50 - view.safeAreaInsets.bottom, width: view.width - 40, height: 50)
+    }
+    
+    @objc private func didTapSignIn() {
+        let vc = AuthViewController()
+        vc.completion = { [weak self] success in
+            DispatchQueue.main.async {
+                self?.handelSignIn(success: success)
+            }
+        }
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func handelSignIn(success: Bool) {
+        
     }
 
     /*

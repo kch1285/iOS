@@ -32,6 +32,7 @@
 		4365088526C7A87800C0FA3F /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4365088426C7A87800C0FA3F /* AudioTrack.swift */; };
 		4365088726C7A88400C0FA3F /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4365088626C7A88400C0FA3F /* Artist.swift */; };
 		4365088926C7A88C00C0FA3F /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4365088826C7A88C00C0FA3F /* UserProfile.swift */; };
+		4365088B26CCC8A400C0FA3F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4365088A26CCC8A400C0FA3F /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		4365088426C7A87800C0FA3F /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
 		4365088626C7A88400C0FA3F /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		4365088826C7A88C00C0FA3F /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		4365088A26CCC8A400C0FA3F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				4365083726C7A4B700C0FA3F /* Assets.xcassets */,
 				4365082E26C7A4B500C0FA3F /* AppDelegate.swift */,
 				4365083026C7A4B500C0FA3F /* SceneDelegate.swift */,
+				4365088A26CCC8A400C0FA3F /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				4365087D26C7A82700C0FA3F /* AuthManager.swift in Sources */,
 				4365087926C7A7FD00C0FA3F /* PlaylistViewController.swift in Sources */,
 				4365083326C7A4B500C0FA3F /* HomeViewController.swift in Sources */,
+				4365088B26CCC8A400C0FA3F /* Extensions.swift in Sources */,
 				4365087F26C7A83600C0FA3F /* APICaller.swift in Sources */,
 				4365088126C7A84B00C0FA3F /* HapticsManager.swift in Sources */,
 				4365087726C7A7F000C0FA3F /* PlayerViewController.swift in Sources */,
