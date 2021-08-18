@@ -58,7 +58,15 @@ class WelcomeViewController: UIViewController {
     }
     
     private func handelSignIn(success: Bool) {
-        
+        guard success else {
+            let alert = UIAlertController(title: nil, message: "Spotify 계정과 일치하지 않습니다. 다시 시도하세요.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        let tabBarVC = TabBarViewController()
+        tabBarVC.modalPresentationStyle = .fullScreen
+        present(tabBarVC, animated: true, completion: nil)
     }
 
     /*

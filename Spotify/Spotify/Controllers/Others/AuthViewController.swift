@@ -53,6 +53,13 @@ extension AuthViewController: WKNavigationDelegate {
             return
         }
         
-        print("\(code)")
+        webView.isHidden = true
+
+        AuthManager.shared.exchangeCodeForToken(code: code, completion: { [weak self] success in
+            DispatchQueue.main.async {
+                self?.navigationController?.popToRootViewController(animated: true)
+                self?.completion?(success)
+            }
+        })
     }
 }
