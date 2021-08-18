@@ -9,11 +9,21 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
-    private let SignInWithSpotifyButton: UIButton = {
+    private let logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Spotify_Logo")
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    private let SignInButton: UIButton = {
         let button = UIButton()
         button.setTitle("로그인하기", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        button.backgroundColor = .systemGreen
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -21,7 +31,6 @@ class WelcomeViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.text = "내 마음에 꼭 드는 또 다른 플레이리스트를 발견해보세요."
-        label.backgroundColor = .link
         label.textColor = .label
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.numberOfLines = 0
@@ -33,17 +42,21 @@ class WelcomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
-        SignInWithSpotifyButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        SignInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
         
         view.addSubview(welcomeLabel)
-        view.addSubview(SignInWithSpotifyButton)
+        view.addSubview(SignInButton)
+        view.addSubview(logoImageView)
     }
+    //view.height - 50 - view.safeAreaInsets.bottom
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let labelHeight: CGFloat = view.height / 5
-        welcomeLabel.frame = CGRect(x: 0, y: view.safeAreaInsets.top + labelHeight, width: view.width, height: labelHeight)
-        SignInWithSpotifyButton.frame = CGRect(x: 20, y: view.height - 50 - view.safeAreaInsets.bottom, width: view.width - 40, height: 50)
+        logoImageView.frame = CGRect(x: view.width / 2 - 40, y: view.safeAreaInsets.top + 80, width: 80, height: 80)
+        welcomeLabel.frame = CGRect(x: 0, y: logoImageView.bottom + 80, width: view.width, height: labelHeight)
+        SignInButton.frame = CGRect(x: 20, y: welcomeLabel.bottom + 100, width: view.width - 40, height: 50)
+        
     }
     
     @objc private func didTapSignIn() {
