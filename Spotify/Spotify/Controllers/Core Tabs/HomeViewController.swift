@@ -23,12 +23,51 @@ class HomeViewController: UIViewController {
         
         settingsButton.addTarget(self, action: #selector(didTapSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
+        fetchData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let buttonSize: CGFloat = 50
         settingsButton.frame = CGRect(x: view.width - buttonSize - 20, y: view.safeAreaInsets.top, width: buttonSize, height: buttonSize)
+    }
+    
+    private func fetchData() {
+        
+        APICaller.shared.getRecommendedGenres { result in
+            switch result {
+            case .failure(let error):
+                break
+            case .success(let model):
+                let genres = model.genres
+                var seeds = Set<String>()
+                
+                while seeds.count < 5 {
+                    if let randomSeeds = genres.randomElement() {
+                        seeds.insert(randomSeeds)
+                    }
+                }
+                
+                APICaller.shared.getRecommendations(genres: seeds) { _ in
+                    
+                }
+            }
+        }
+        
+        
+//        APICaller.shared.getFeaturedPlaylists { _ in
+//
+//        }
+        
+        
+//        APICaller.shared.getNewReleases { result in
+//            switch result {
+//            case .failure(let error):
+//                break
+//            case .success(let model):
+//                break
+//            }
+//        }
     }
     
     @objc private func didTapSettings() {
