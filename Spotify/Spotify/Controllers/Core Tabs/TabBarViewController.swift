@@ -31,7 +31,7 @@ class TabBarViewController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: libraryVC)
         let nav4 = UINavigationController(rootViewController: premiumVC)
         
-      //  nav1.navigationBar.tintColor = .label
+        nav1.navigationBar.tintColor = .label
         nav1.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "music.note.house.fill"), tag: 1)
         nav2.tabBarItem = UITabBarItem(title: "검색하기", image: UIImage(systemName: "magnifyingglass"), tag: 2)
         nav3.tabBarItem = UITabBarItem(title: "내 라이브러리", image: UIImage(systemName: "music.note.list"), tag: 3)
