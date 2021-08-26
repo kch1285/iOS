@@ -18,7 +18,7 @@ class TabBarViewController: UITabBarController {
         let libraryVC = LibraryViewController()
         let premiumVC = PremiumViewController()
         
-        homeVC.navigationItem.title = "추천 방송국"
+        homeVC.navigationItem.title = "홈"
         searchVC.title = "검색하기"
         libraryVC.title = "내 라이브러리"
         
