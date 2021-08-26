@@ -28,6 +28,55 @@ final class APICaller {
         
     }
     
+    //MARK: - Category
+    
+    public func getAllCategories(completion: @escaping (Result<[CategoryItem], Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/categories?limit=50"), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                print("getAllCategories : \(request)")
+                
+                do {
+                    let result = try JSONDecoder().decode(AllCategories.self, from: data)
+                    completion(.success(result.categories.items))
+                }
+                catch {
+                    print("error : \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+            
+            task.resume()
+        }
+    }
+    
+    public func getCategoryPlaylists(category: CategoryItem, completion: @escaping (Result<[Playlist], Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/categories/\(category.id)/playlists?limit=50"), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                print("getCategoryPlaylists : \(request)")
+                
+                do {
+                    let result = try JSONDecoder().decode(CategoryPlaylists.self, from: data)
+                    let playlists = result.playlists.items
+                    completion(.success(playlists))
+                }
+                catch {
+                    print("error : \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+            
+            task.resume()
+        }
+    }
+    
     //MARK: - Albums
     
     public func getAlbumDetails(for album: Album, completion: @escaping (Result<AlbumDetails, Error>) -> Void) {
