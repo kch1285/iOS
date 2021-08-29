@@ -19,8 +19,10 @@ final class AuthManager {
     }
     
     struct Constants {
-        static let clientID = "49c41b6e730b4d8da439779638ed8041"
-        static let clientSecret = "71d09de6d81a4bed9d7fa5df0d0b176a"
+        //static let clientID = "49c41b6e730b4d8da439779638ed8041"
+        static let clientID = "58728de20e9e4f0d92730077e4b14c37"
+        //static let clientSecret = "71d09de6d81a4bed9d7fa5df0d0b176a"
+        static let clientSecret = "d7c0321477db48c1851dad7587cbd1db"
         static let tokenAPIUrl = "https://accounts.spotify.com/api/token"
         static let redirectUri = "https://github.com/kch1285"
         // https://developer.spotify.com/documentation/general/guides/scopes/#user-read-email 에서 scope 선택 추가
