@@ -28,9 +28,12 @@ class LibraryViewController: UIViewController {
         toggleView.delegate = self
         
         scrollView.contentSize = CGSize(width: view.width * 2, height: scrollView.height)
+        
         view.addSubview(scrollView)
         view.addSubview(toggleView)
+        
         addChildren()
+        updateBarButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,6 +53,21 @@ class LibraryViewController: UIViewController {
         albumsVC.view.frame = CGRect(x: view.width, y: 0, width: scrollView.width, height: scrollView.height)
         albumsVC.didMove(toParent: self)
     }
+    
+    private func updateBarButtons() {
+        navigationController?.navigationBar.tintColor = .label
+        switch toggleView.state {
+        case .playlisdts:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddPlaylist))
+        case .albums:
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    @objc private func didTapAddPlaylist() {
+        let vc = CreatePlaylistViewController()
+        navigationController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
 }
 
 //MARK: - UIScrollViewDelegate
@@ -58,9 +76,11 @@ extension LibraryViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x >= view.width - 100 {
             toggleView.update(for: .albums)
+            updateBarButtons()
         }
         else {
             toggleView.update(for: .playlisdts)
+            updateBarButtons()
         }
     }
 }
@@ -71,9 +91,11 @@ extension LibraryViewController: UIScrollViewDelegate {
 extension LibraryViewController: LibraryToggleViewDelegate {
     func libraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView) {
         scrollView.setContentOffset(.zero, animated: true)
+        updateBarButtons()
     }
     
     func libraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView) {
         scrollView.setContentOffset(CGPoint(x: view.width, y: 0), animated: true)
+        updateBarButtons()
     }
 }
