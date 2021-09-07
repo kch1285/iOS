@@ -51,12 +51,19 @@ class HomeViewController: UIViewController {
         view.addSubview(spinner)
         
         fetchData()
+        addLongTapGesture()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
     }
+    
+    private func addLongTapGesture() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didTapLong(_:)))
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
     
     private func configureCollectionView() {
         view.addSubview(collectionView)
@@ -228,6 +235,35 @@ class HomeViewController: UIViewController {
         vc.navigationItem.largeTitleDisplayMode = .never
     //    navigationController?.navigationBar.topItem?.title = ""
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func didTapLong(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        
+        let touchPoint = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint), indexPath.section == 2 else {
+            return
+        }
+        
+        let model = tracks[indexPath.row]
+        let actionSheet = UIAlertController(title: model.name, message: "플레이리스트에 추가하기", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "추가하기", style: .default, handler: { [weak self] _ in
+            DispatchQueue.main.async {
+                let vc = LibraryPlaylistsViewController()
+                vc.selectionHandler = { playlist in
+                    APICaller.shared.addTrackToPlaylist(track: model, playlist: playlist) { success in
+                        
+                    }
+                }
+                self?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
     }
 }
 
