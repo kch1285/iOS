@@ -12,6 +12,7 @@ class PlaylistViewController: UIViewController {
     private let playlist: Playlist
     private var viewModels = [RecommendedTracksCellViewModel]()
     private var tracks = [AudioTrack]()
+    public var isOwner = false
     
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { _, _ in
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
@@ -43,6 +44,8 @@ class PlaylistViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didTapLongPress(_:)))
+        collectionView.addGestureRecognizer(gesture)
         
         collectionView.register(RecommendedTracksCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedTracksCollectionViewCell.identifier)
         collectionView.register(PlaylistHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: PlaylistHeaderCollectionReusableView.identifier)
@@ -82,6 +85,38 @@ class PlaylistViewController: UIViewController {
         let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true, completion: nil)
+    }
+    
+    @objc private func didTapLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        
+        let touchPoint = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint) else {
+            return
+        }
+        let trackToDelete = tracks[indexPath.row]
+        let actionSheet = UIAlertController(title: trackToDelete.name, message: "이 플레이리스트에서 삭제하기", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "삭제하기", style: .destructive, handler: {  [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
+            APICaller.shared.removeTrackFromPlaylist(track: trackToDelete, playlist: strongSelf.playlist) { success in
+                DispatchQueue.main.async {
+                    if success {
+                        strongSelf.tracks.remove(at: indexPath.row)
+                        strongSelf.viewModels.remove(at: indexPath.row)
+                        strongSelf.collectionView.reloadData()
+                    }
+                    else {
+                        print("Failed to remove")
+                    }
+                }
+            }
+        }))
+        present(actionSheet, animated: true, completion: nil)
     }
 }
 
