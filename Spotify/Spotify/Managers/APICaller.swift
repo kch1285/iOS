@@ -166,7 +166,6 @@ final class APICaller {
                     return
                 }
                 print("addAlbumToLibrary : \(request)")
-                print(code)
                 completion(code == 200)
             }
             task.resume()

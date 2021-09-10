@@ -76,12 +76,15 @@ class CreatePlaylistViewController: UIViewController {
         
         APICaller.shared.createPlaylist(with: text) { [weak self] success in
             if success {
+                HapticsManager.shared.vibrate(for: .success)
+                
                 NotificationCenter.default.post(name: .playlistCreatedNotification, object: nil)
                 DispatchQueue.main.async {
                     self?.dismiss(animated: true, completion: nil)
                 }
             }
             else {
+                HapticsManager.shared.vibrate(for: .error)
                 print("Failed to create playlist !!!")
             }
         }
