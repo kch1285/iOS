@@ -33,3 +33,8 @@ extension UIView {
         return frame.origin.x + frame.size.width
     }
 }
+
+extension Notification.Name {
+    static let albumSavedNotification = Notification.Name("albumSavedNotification")
+    static let playlistCreatedNotification = Notification.Name("playlistCreatedNotification")
+}

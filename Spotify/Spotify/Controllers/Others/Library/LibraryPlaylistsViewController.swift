@@ -12,7 +12,7 @@ class LibraryPlaylistsViewController: UIViewController {
 
     var playlists = [Playlist]()
     private let noPlaylistView = ActionLabelView()
-    static let shared = LibraryPlaylistsViewController()
+    private var observer: NSObjectProtocol?
     public var selectionHandler: ((Playlist) -> Void)?
     
     
@@ -35,6 +35,10 @@ class LibraryPlaylistsViewController: UIViewController {
         view.addSubview(tableView)
         setUpNoPlaylistView()
         fetchPlaylists()
+        
+        observer = NotificationCenter.default.addObserver(forName: .playlistCreatedNotification, object: nil, queue: .main, using: { [weak self] _ in
+            self?.fetchPlaylists()
+        })
         
         if selectionHandler != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapClose))
@@ -67,6 +71,7 @@ class LibraryPlaylistsViewController: UIViewController {
     }
     
     public func fetchPlaylists() {
+        playlists.removeAll()
         APICaller.shared.getCurrentUserPlaylists { [weak self] result in
             DispatchQueue.main.async {
                 switch result {

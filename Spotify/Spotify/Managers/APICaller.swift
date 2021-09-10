@@ -17,6 +17,7 @@ final class APICaller {
         case GET
         case POST
         case DELETE
+        case PUT
     }
     
     enum APIError: Error {
@@ -128,6 +129,45 @@ final class APICaller {
                     print("error : \(error.localizedDescription)")
                     completion(.failure(error))
                 }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getCurrentUserAlbums(completion: @escaping (Result<[Album], Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/albums"), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                print("getCurrentUserAlbums : \(request)")
+                
+                do {
+                    let result = try JSONDecoder().decode(LibraryAlbums.self, from: data)
+                    completion(.success(result.items.compactMap({ $0.album })))
+                }
+                catch {
+                    print("error : \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func addAlbumToLibrary(album: Album, completion: @escaping (Bool) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/albums?ids=\(album.id)"), type: .PUT) { baseRequest in
+            var request = baseRequest
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let code = (response as? HTTPURLResponse)?.statusCode, error == nil else {
+                    completion(false)
+                    return
+                }
+                print("addAlbumToLibrary : \(request)")
+                print(code)
+                completion(code == 200)
             }
             task.resume()
         }

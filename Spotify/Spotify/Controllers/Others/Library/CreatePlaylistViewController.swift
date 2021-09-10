@@ -76,8 +76,8 @@ class CreatePlaylistViewController: UIViewController {
         
         APICaller.shared.createPlaylist(with: text) { [weak self] success in
             if success {
+                NotificationCenter.default.post(name: .playlistCreatedNotification, object: nil)
                 DispatchQueue.main.async {
-                    LibraryPlaylistsViewController.shared.fetchPlaylists()
                     self?.dismiss(animated: true, completion: nil)
                 }
             }

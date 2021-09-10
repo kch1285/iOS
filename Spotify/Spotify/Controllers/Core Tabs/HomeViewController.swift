@@ -229,7 +229,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func didTapSettings() {
-        print("tap")
         let vc = SettingsViewController()
         vc.title = "설정"
         vc.navigationItem.largeTitleDisplayMode = .never
