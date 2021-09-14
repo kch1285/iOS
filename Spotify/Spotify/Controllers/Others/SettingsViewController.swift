@@ -66,6 +66,23 @@ class SettingsViewController: UIViewController {
     }
     
     private func didTapSignOut() {
+        let alert = UIAlertController(title: "로그아웃하기", message: "로그아웃하시겠어요?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소하기", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "로그아웃하기", style: .destructive, handler: { _ in
+            AuthManager.shared.signOut { [weak self] success in
+                if success {
+                    DispatchQueue.main.async {
+                        
+                        let vc = UINavigationController(rootViewController: WelcomeViewController())
+                        vc.modalPresentationStyle = .fullScreen
+                        self?.present(vc, animated: true, completion: {
+                            self?.navigationController?.popToRootViewController(animated: true)
+                        })
+                    }
+                }
+            }
+        }))
+        present(alert, animated: true, completion: nil)
         
     }
 }
