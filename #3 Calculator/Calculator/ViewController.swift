@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet var holder: UIView!
+
     private var resultLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -18,19 +19,23 @@ class ViewController: UIViewController {
         return label
     }()
     
-    var firstNumber: Float = 0
-    var secondNumber: Float = 0
-    
-    var currentOperation: Operation?
-    var signFlag: Bool = true
-    var dotFlag: Bool = false
-    var maxCount: Int = 8
-    var errFlag: Bool = false
-    var continuousFlag: Bool = false
-    
-    enum Operation {
-        case add, subtract, multiply, divide
+    private var displayValue: Float {
+        get {
+            guard let digit = resultLabel.text else {
+                return 0.0
+            }
+            
+            return Float(digit)!
+        }
+        set {
+            resultLabel.text = String(newValue)
+        }
     }
+    
+    private var model = CalculateModel()
+    private var maxCount: Int = 8
+    private var isTyping = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -41,17 +46,15 @@ class ViewController: UIViewController {
         setupNumberPad()
     }
     
-    private func setupNumberPad(){
+    private func setupNumberPad() {
         let buttonSize: CGFloat = view.frame.size.width / 4
         let zeroButton = UIButton(frame: CGRect(x: 0, y: holder.frame.size.height - buttonSize, width: buttonSize * 2, height: buttonSize))
-        zeroButton.layer.borderWidth = 2
-        zeroButton.layer.borderColor = UIColor.red.cgColor
         zeroButton.setTitleColor(.white, for: .normal)
         zeroButton.tag = 1
         zeroButton.backgroundColor = .darkGray
         zeroButton.setTitle("0", for: .normal)
         zeroButton.titleLabel?.font = .systemFont(ofSize: 30)
-        zeroButton.addTarget(self, action: #selector(zeroPressed(_:)), for: .touchUpInside)
+        zeroButton.addTarget(self, action: #selector(numberPressed(_:)), for: .touchUpInside)
         holder.addSubview(zeroButton)
         
         let dotButton = UIButton(frame: CGRect(x: buttonSize * 2, y: holder.frame.size.height - buttonSize, width: buttonSize, height: buttonSize))
@@ -60,7 +63,7 @@ class ViewController: UIViewController {
         dotButton.backgroundColor = .darkGray
         dotButton.setTitle(".", for: .normal)
         dotButton.titleLabel?.font = .systemFont(ofSize: 30)
-        dotButton.addTarget(self, action: #selector(dotPressed(_:)), for: .touchUpInside)
+        dotButton.addTarget(self, action: #selector(numberPressed(_:)), for: .touchUpInside)
         holder.addSubview(dotButton)
         
         for x in 0..<3{
@@ -103,7 +106,7 @@ class ViewController: UIViewController {
         acButton.backgroundColor = .lightGray
         acButton.setTitle("AC", for: .normal)
         acButton.titleLabel?.font = .systemFont(ofSize: 30)
-        acButton.addTarget(self, action: #selector(clearPressed(_:)), for: .touchUpInside)
+        acButton.addTarget(self, action: #selector(operationPressed(_:)), for: .touchUpInside)
         holder.addSubview(acButton)
         
         let plusMinusButton = UIButton(frame: CGRect(x: buttonSize, y: holder.frame.size.height - (buttonSize * 5), width: buttonSize, height: buttonSize))
@@ -111,7 +114,7 @@ class ViewController: UIViewController {
         plusMinusButton.backgroundColor = .lightGray
         plusMinusButton.setTitle("+/-", for: .normal)
         plusMinusButton.titleLabel?.font = .systemFont(ofSize: 30)
-        plusMinusButton.addTarget(self, action: #selector(plusMinusPressed(_:)), for: .touchUpInside)
+        plusMinusButton.addTarget(self, action: #selector(operationPressed(_:)), for: .touchUpInside)
         holder.addSubview(plusMinusButton)
         
         let percentButton = UIButton(frame: CGRect(x: buttonSize * 2, y: holder.frame.size.height - (buttonSize * 5), width: buttonSize, height: buttonSize))
@@ -119,7 +122,7 @@ class ViewController: UIViewController {
         percentButton.backgroundColor = .lightGray
         percentButton.setTitle("%", for: .normal)
         percentButton.titleLabel?.font = .systemFont(ofSize: 30)
-        percentButton.addTarget(self, action: #selector(percentPressed(_:)), for: .touchUpInside)
+        percentButton.addTarget(self, action: #selector(operationPressed(_:)), for: .touchUpInside)
         holder.addSubview(percentButton)
         
         let operations = ["=", "+", "-", "x", "÷"]
@@ -139,194 +142,49 @@ class ViewController: UIViewController {
         
     }
     
-    @objc func clearPressed(_ sender: UIButton){
-        resultLabel.text = "0"
-        currentOperation = nil
-        firstNumber = 0
-        signFlag = true
-        dotFlag = false
-        errFlag = false
-        continuousFlag = false
-        maxCount = 8
-    }
-    
-    @objc func plusMinusPressed(_ sender: UIButton){
-        if let text = resultLabel.text{
-            if signFlag{
-                resultLabel.text = "-" + text
-                signFlag = false
-                maxCount += 1
-            }
-            else{
-                resultLabel.text = text.trimmingCharacters(in: ["-"])
-                signFlag = true
-                maxCount -= 1
+    @objc private func numberPressed(_ sender: UIButton){
+        guard let digit = sender.currentTitle else {
+            return
+        }
+        if isTyping {
+            if let currentDigits = resultLabel.text,
+               let count = resultLabel.text?.count, count < maxCount {
+                resultLabel.text = currentDigits + digit
             }
         }
-    }
-    
-    @objc func percentPressed(_ sender: UIButton){
-        if let text = resultLabel.text, var value = Float(text){
-            value = value * 0.01
-            resultLabel.text = "\(value)"
-            dotFlag = true
-            maxCount += 1
+        else {
+            resultLabel.text = digit
         }
+        isTyping = true
     }
     
-    @objc func dotPressed(_ sender: UIButton){
-        if let text = resultLabel.text{
-            if !dotFlag{
-                resultLabel.text = text + "."
-                dotFlag = true
-                maxCount += 1
-            }
-        }
-    }
-    
-    @objc func zeroPressed(_ sender: UIButton){
-        if resultLabel.text != "0"{
-            if let text = resultLabel.text{
-                resultLabel.text = "\(text)\(0)"
-            }
-        }
-    }
-    
-    @objc func numberPressed(_ sender: UIButton){
-        let tag = sender.tag - 1
-        if let count = resultLabel.text?.count{
-            if count < maxCount{
-                if signFlag{
-                    if resultLabel.text == "0"{
-                        resultLabel.text = "\(tag)"
-                    }
-                    
-                    else if let text = resultLabel.text{
-                        resultLabel.text = "\(text)\(tag)"
-                    }
-                }
-                else{
-                    if resultLabel.text == "-0"{
-                        resultLabel.text = "-" + "\(tag)"
-                    }
-                    
-                    else if let text = resultLabel.text{
-                        resultLabel.text = "\(text)\(tag)"
-                    }
-                }
-            }
-            
+    @objc private func operationPressed(_ sender: UIButton){
+        if isTyping {
+            model.setOperand(operand: displayValue)
+            isTyping = false
         }
         
-    }
-    
-    @objc func operationPressed(_ sender: UIButton){
-        let tag = sender.tag
-        if !errFlag{
-            if let text = resultLabel.text, let value = Float(text), firstNumber == 0{
-                firstNumber = value
-                resultLabel.text = "0"
-                signFlag = true
-                dotFlag = false
-            }
-            if tag == 1{
-                if !continuousFlag{
-                    if let text = resultLabel.text, let value = Float(text){
-                        secondNumber = value
-                    }
-                    continuousFlag = true
-                }
-                
-                if let operation = currentOperation{
-                    switch operation {
-                    case .add:
-                        let result = firstNumber + secondNumber
-                        let count = String(result).count
-                        if count > maxCount{
-                            errFlag = true
-                            resultLabel.text = "ERR"
-                        }
-                        else{
-                            firstNumber = result
-                            if result == Float(Int(result)){
-                                let toInt = Int(result)
-                                resultLabel.text = "\(toInt)"
-                            }
-                            else{
-                                resultLabel.text = "\(result)"
-                            }
-                        }
-                        break
-                    case .subtract:
-                        let result = firstNumber - secondNumber
-                        let count = String(result).count
-                        if count > maxCount{
-                            errFlag = true
-                            resultLabel.text = "ERR"
-                        }
-                        else{
-                            firstNumber = result
-                            if result == Float(Int(result)){
-                                let toInt = Int(result)
-                                resultLabel.text = "\(toInt)"
-                            }
-                            else{
-                                resultLabel.text = "\(result)"
-                            }
-                        }
-                        break
-                    case .multiply:
-                        let result = firstNumber * secondNumber
-                        let count = String(result).count
-                        if count > maxCount{
-                            errFlag = true
-                            resultLabel.text = "ERR"
-                        }
-                        else{
-                            firstNumber = result
-                            if result == Float(Int(result)){
-                                let toInt = Int(result)
-                                resultLabel.text = "\(toInt)"
-                            }
-                            else{
-                                resultLabel.text = "\(result)"
-                            }
-                        }
-                        break
-                    case .divide:
-                        let result = firstNumber / secondNumber
-                        let count = String(result).count
-                        if count > maxCount{
-                            errFlag = true
-                            resultLabel.text = "ERR"
-                        }
-                        else{
-                            firstNumber = result
-                            if result == Float(Int(result)){
-                                let toInt = Int(result)
-                                resultLabel.text = "\(toInt)"
-                            }
-                            else{
-                                resultLabel.text = "\(result)"
-                            }
-                        }
-                        break
-                    }
-                }
-            }
-            else if tag == 2{
-                currentOperation = .add
-            }
-            else if tag == 3{
-                currentOperation = .subtract
-            }
-            else if tag == 4{
-                currentOperation = .multiply
-            }
-            else if tag == 5{
-                currentOperation = .divide
-            }
+        if let symbol = sender.currentTitle {
+            model.calculate(symbol: symbol)
         }
+        
+        if String(model.result).contains(".") {
+            maxCount += 1
+        }
+        
+        if String(model.result).contains("-") {
+            maxCount += 1
+        }
+        
+        print(model.result)
+        print(String(model.result).count)
+        if String(model.result).count < maxCount {
+            displayValue = model.result
+        }
+        else {
+            resultLabel.text = "ERR"
+        }
+        maxCount = 8
     }
 }
 
