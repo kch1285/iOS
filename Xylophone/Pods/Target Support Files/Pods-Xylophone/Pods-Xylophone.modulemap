@@ -1,0 +1,6 @@
+framework module Pods_Xylophone {
+  umbrella header "Pods-Xylophone-umbrella.h"
+
+  export *
+  module * { export * }
+}
