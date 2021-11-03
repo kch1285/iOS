@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
 
@@ -64,30 +65,56 @@ class ViewController: UIViewController {
 extension ViewController {
     private func setUpDice() {
         let diceSize: CGFloat = 120
-        firstDiceImage.frame = CGRect(x: 45, y: (view.frame.size.height - diceSize) / 2, width: diceSize, height: diceSize)
-        secondDiceImage.frame = CGRect(x: view.frame.size.width - 45 - diceSize, y: (view.frame.size.height - diceSize) / 2, width: diceSize, height: diceSize)
-        
         view.addSubview(firstDiceImage)
         view.addSubview(secondDiceImage)
+        
+        firstDiceImage.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(view.frame.size.width / 8)
+            make.width.equalTo(diceSize)
+            make.height.equalTo(diceSize)
+            make.centerY.equalToSuperview()
+        }
+        
+        secondDiceImage.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-view.frame.size.width / 8)
+            make.width.equalTo(diceSize)
+            make.height.equalTo(diceSize)
+            make.centerY.equalToSuperview()
+        }
     }
     
     private func setUpBackground() {
         backgroundImage.frame = view.bounds
         view.addSubview(backgroundImage)
+        
+        backgroundImage.snp.makeConstraints { make in
+            make.size.equalToSuperview()
+        }
     }
     
     private func setUpLogo() {
         let logoSize: CGFloat = view.frame.size.height / 5
-        logoImage.frame = CGRect(x: (view.frame.size.width - logoSize) / 2, y: logoSize / 2, width: logoSize, height: logoSize)
         view.addSubview(logoImage)
+        
+        logoImage.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(logoSize)
+            make.height.equalTo(logoSize)
+            make.top.equalToSuperview().offset(50)
+        }
     }
     
     private func setUpButton() {
         let buttonWidth: CGFloat = view.frame.size.width / 2
-        rollButton.frame = CGRect(x: (view.frame.size.width - buttonWidth) / 2, y: (view.frame.size.height - buttonWidth / 2) / 1.25, width: buttonWidth, height: buttonWidth / 2)
-        
         rollButton.addTarget(self, action: #selector(rollButtonPressed), for: .touchUpInside)
         view.addSubview(rollButton)
+        
+        rollButton.snp.makeConstraints { make in
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonWidth / 2)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-view.frame.height / 15)
+        }
     }
     
     @objc private func rollButtonPressed() {
