@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		430B0B452734195400329364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B442734195400329364 /* AppDelegate.swift */; };
 		430B0B472734195400329364 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B462734195400329364 /* SceneDelegate.swift */; };
-		430B0B492734195400329364 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B482734195400329364 /* MainViewController.swift */; };
+		430B0B492734195400329364 /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B482734195400329364 /* ConnectingViewController.swift */; };
 		430B0B4E2734195800329364 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 430B0B4D2734195800329364 /* Assets.xcassets */; };
 		430B0B512734195800329364 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430B0B4F2734195800329364 /* LaunchScreen.storyboard */; };
 		430B0B5A273419D000329364 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 430B0B5C273419D000329364 /* InfoPlist.strings */; };
 		430B0B5E27341C4F00329364 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B5D27341C4F00329364 /* LoginViewController.swift */; };
 		430B0B6627341D1B00329364 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B6527341D1B00329364 /* SignUpViewController.swift */; };
 		430B0B6827341EAC00329364 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B6727341EAC00329364 /* LoginView.swift */; };
+		4381A911273B96E80053F971 /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381A910273B96E80053F971 /* ConnectingView.swift */; };
 		43BC690A273A8C0F00F1783D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BC6909273A8C0F00F1783D /* GoogleService-Info.plist */; };
 		43BC690C273A8CFC00F1783D /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690B273A8CFC00F1783D /* AuthManager.swift */; };
 		43BC690E273A961000F1783D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690D273A961000F1783D /* SignUpView.swift */; };
@@ -27,7 +28,7 @@
 		430B0B412734195400329364 /* WooriDuri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WooriDuri.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		430B0B442734195400329364 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		430B0B462734195400329364 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		430B0B482734195400329364 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		430B0B482734195400329364 /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
 		430B0B4D2734195800329364 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		430B0B502734195800329364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		430B0B522734195800329364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,6 +36,7 @@
 		430B0B5D27341C4F00329364 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		430B0B6527341D1B00329364 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		430B0B6727341EAC00329364 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		4381A910273B96E80053F971 /* ConnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingView.swift; sourceTree = "<group>"; };
 		43BC6909273A8C0F00F1783D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43BC690B273A8CFC00F1783D /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		43BC690D273A961000F1783D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -89,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				430B0B6427341CFB00329364 /* Login */,
-				430B0B482734195400329364 /* MainViewController.swift */,
+				430B0B482734195400329364 /* ConnectingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -97,10 +99,10 @@
 		430B0B6027341C9000329364 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				430B0B6727341EAC00329364 /* LoginView.swift */,
-				43BC690D273A961000F1783D /* SignUpView.swift */,
+				4381A90F273B96A30053F971 /* Login */,
 				430B0B4D2734195800329364 /* Assets.xcassets */,
 				430B0B4F2734195800329364 /* LaunchScreen.storyboard */,
+				4381A910273B96E80053F971 /* ConnectingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +130,15 @@
 			children = (
 				430B0B5D27341C4F00329364 /* LoginViewController.swift */,
 				430B0B6527341D1B00329364 /* SignUpViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4381A90F273B96A30053F971 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				430B0B6727341EAC00329364 /* LoginView.swift */,
+				43BC690D273A961000F1783D /* SignUpView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -268,11 +279,12 @@
 				430B0B6827341EAC00329364 /* LoginView.swift in Sources */,
 				43BC690C273A8CFC00F1783D /* AuthManager.swift in Sources */,
 				430B0B5E27341C4F00329364 /* LoginViewController.swift in Sources */,
-				430B0B492734195400329364 /* MainViewController.swift in Sources */,
+				430B0B492734195400329364 /* ConnectingViewController.swift in Sources */,
 				43BC690E273A961000F1783D /* SignUpView.swift in Sources */,
 				430B0B452734195400329364 /* AppDelegate.swift in Sources */,
 				430B0B472734195400329364 /* SceneDelegate.swift in Sources */,
 				430B0B6627341D1B00329364 /* SignUpViewController.swift in Sources */,
+				4381A911273B96E80053F971 /* ConnectingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class SignUpViewController: UIViewController {
     private let signUpView = SignUpView()
@@ -15,6 +16,15 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSignUpView()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        signUpView.emailField.becomeFirstResponder()
     }
 
     private func setUpSignUpView() {
@@ -34,16 +44,27 @@ class SignUpViewController: UIViewController {
             
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
                 if !email.contains("@") {
-                    self?.alertUserSignUpEmailError()
+                    self?.alertUserSignUpError(message: "올바른 이메일 형식이 아닙니다.")
                 }
                 else if password.count < 8 {
-                    self?.alertUserSignUpPasswordError()
+                    self?.alertUserSignUpError(message: "비밀번호는 8자리 이상이어야 합니다")
                 }
                 else {
                     // 회원가입 완료!
                     print("회원가입 !!!")
+                    FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+                        guard error == nil else {
+                            self?.alertUserSignUpError(message: "이미 존재하는 메일주소입니다. 다시 시도해주세요.")
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            let vc = ConnectingViewController()
+                            self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                            self?.navigationController?.navigationBar.isHidden = true
+                            self?.navigationController?.pushViewController(vc, animated: true)
+                        }
+                    }
                 }
-                
             }))
             
             alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: nil))
@@ -51,28 +72,15 @@ class SignUpViewController: UIViewController {
         }
         
         else {
-            alertUserSignUpBlankError()
+            alertUserSignUpError(message: "회원가입을 위해 모든 정보를 입력해주세요.")
         }
     }
     
-    private func alertUserSignUpBlankError() {
-        let alert = UIAlertController(title: "알림", message: "회원가입을 위해 모든 정보를 입력해주세요.", preferredStyle: .alert)
+    private func alertUserSignUpError(message: String) {
+        let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true)
     }
-    
-    private func alertUserSignUpEmailError() {
-        let alert = UIAlertController(title: "알림", message: "올바른 이메일 형식이 아닙니다.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true)
-    }
-    
-    private func alertUserSignUpPasswordError() {
-        let alert = UIAlertController(title: "알림", message: "비밀번호는 8자리 이상이어야 합니다", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true)
-    }
-    
 }
 
 

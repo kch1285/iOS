@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            window.rootViewController = navVC
 //        }
 //        else {
-//            window.rootViewController = MainViewController()
+//            window.rootViewController = ConnectingViewController()
 //        }
         let vc = LoginViewController()
         let navVC = UINavigationController(rootViewController: vc)

@@ -41,8 +41,9 @@ final class SignUpView: UIView {
         field.backgroundColor = .darkGray
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        field.keyboardType = .default
+        field.keyboardType = .emailAddress
         field.placeholder = "이메일을 입력해주세요."
+        field.autocapitalizationType = .none
         return field
     }()
     

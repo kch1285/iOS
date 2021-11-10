@@ -35,6 +35,7 @@ final class LoginView: UIView {
         field.borderStyle = .roundedRect
         field.textAlignment = .center
         field.keyboardType = .emailAddress
+        field.autocapitalizationType = .none
         return field
     }()
     
@@ -44,7 +45,8 @@ final class LoginView: UIView {
         field.backgroundColor = .darkGray
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        field.keyboardType = .emailAddress
+        field.keyboardType = .default
+        field.isSecureTextEntry = true
         return field
     }()
     
