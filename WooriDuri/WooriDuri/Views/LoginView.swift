@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 protocol LoginViewDelegate: AnyObject {
-    func SignUpButtonPressed()
-    func LoginButtonPressed()
+    func signUpButtonPressed()
+    func loginButtonPressed()
 }
 
 final class LoginView: UIView {
@@ -28,13 +28,23 @@ final class LoginView: UIView {
         return button
     }()
     
-    private let phoneNumberField: UITextField = {
+    let emailField: UITextField = {
         let field = UITextField()
-        field.placeholder = "휴대폰 번호를 입력하세요."
+        field.placeholder = "이메일"
         field.backgroundColor = .darkGray
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        field.keyboardType = .numberPad
+        field.keyboardType = .emailAddress
+        return field
+    }()
+    
+    let passwordField: UITextField = {
+        let field = UITextField()
+        field.placeholder = "비밀번호"
+        field.backgroundColor = .darkGray
+        field.borderStyle = .roundedRect
+        field.textAlignment = .center
+        field.keyboardType = .emailAddress
         return field
     }()
     
@@ -77,49 +87,58 @@ final class LoginView: UIView {
         backgroundColor = UIColor(red: 57/255, green: 55/255, blue: 55/255, alpha: 1) //393737
         addSubview(backgroundImage)
         addSubview(loginButton)
-        addSubview(phoneNumberField)
+        addSubview(emailField)
         addSubview(notiLabel)
         addSubview(signUpButton)
+        addSubview(passwordField)
         
         signUpButton.addTarget(self, action: #selector(didTapSignUpButton), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
     }
     
     private func setUpAutoLayout() {
+        backgroundImage.snp.makeConstraints { make in
+            make.top.trailing.leading.equalToSuperview()
+            make.bottom.equalToSuperview().dividedBy(2)
+        }
+        
+        emailField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(frame.size.width / 9)
+            make.trailing.equalToSuperview().offset(-frame.size.width / 3)
+            make.top.equalTo(backgroundImage.snp.bottom).offset(10)
+        }
+        
+        passwordField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(frame.size.width / 9)
+            make.trailing.equalToSuperview().offset(-frame.size.width / 3)
+            make.top.equalTo(emailField.snp.bottom).offset(10)
+        }
+        
         loginButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(50)
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-frame.size.width / 8)
-        }
-        
-        backgroundImage.snp.makeConstraints { make in
-            make.top.trailing.leading.equalToSuperview()
-        }
-        
-        phoneNumberField.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(frame.size.width / 8)
-            make.centerY.equalToSuperview()
+            make.leading.equalTo(emailField.snp.trailing).offset(10)
+            make.top.equalTo(emailField.snp.centerY)
         }
         
         notiLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-frame.size.height / 4)
+            make.bottom.equalToSuperview().offset(-frame.size.height / 5)
         }
         
         signUpButton.snp.makeConstraints { make in
             make.width.equalTo(120)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalTo(notiLabel.snp.bottom).offset(50)
+            make.top.equalTo(notiLabel.snp.bottom).offset(30)
         }
     }
     
     @objc private func didTapSignUpButton() {
-        delegate?.SignUpButtonPressed()
+        delegate?.signUpButtonPressed()
     }
     
     @objc private func didTapLoginButton() {
-        delegate?.LoginButtonPressed()
+        delegate?.loginButtonPressed()
     }
 }

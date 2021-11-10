@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -25,19 +26,20 @@ class LoginViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension LoginViewController: LoginViewDelegate {
-    func LoginButtonPressed() {
-        DispatchQueue.main.async {
-            let vc = MainViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+    func loginButtonPressed() {
+        
     }
     
-    func SignUpButtonPressed() {
+    func signUpButtonPressed() {
         DispatchQueue.main.async {
             let vc = SignUpViewController()
+            vc.title = "회원가입"
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

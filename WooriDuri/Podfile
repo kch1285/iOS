@@ -8,4 +8,5 @@ target 'WooriDuri' do
   # Pods for WooriDuri
 
 pod 'SnapKit'
+pod 'Firebase/Auth'
 end
