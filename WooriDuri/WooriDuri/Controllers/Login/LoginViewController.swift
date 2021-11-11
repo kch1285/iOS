@@ -19,6 +19,16 @@ class LoginViewController: UIViewController {
         setUpLoginView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObservers()
+    }
+    
     private func checkUserLogin() {
         if FirebaseAuth.Auth.auth().currentUser != nil {
             DispatchQueue.main.async {
@@ -46,6 +56,29 @@ class LoginViewController: UIViewController {
         let alert = UIAlertController(title: "알림", message: "잘못된 이메일 주소 또는 비밀번호입니다. 다시 시도해 주세요.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true)
+    }
+    
+    private func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow() {
+        if view.frame.origin.y == 0 {
+            view.frame.origin.y -= view.frame.size.height / 4
+        }
+    }
+    
+    @objc private func keyboardWillHide() {
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
     }
 }
 

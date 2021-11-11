@@ -22,9 +22,17 @@ class ConnectingViewController: UIViewController {
             make.size.equalToSuperview()
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension ConnectingViewController: ConnectingViewDelegate {
+    func connectButtonPressed() {
+        
+    }
+    
     func signOutButtonPressed() {
         do {
             try FirebaseAuth.Auth.auth().signOut()

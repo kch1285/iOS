@@ -11,7 +11,6 @@ import FirebaseAuth
 
 class SignUpViewController: UIViewController {
     private let signUpView = SignUpView()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +23,12 @@ class SignUpViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        signUpView.emailField.becomeFirstResponder()
+        addKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObservers()
     }
 
     private func setUpSignUpView() {
@@ -80,6 +84,29 @@ class SignUpViewController: UIViewController {
         let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true)
+    }
+    
+    private func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow() {
+        if view.frame.origin.y == 0 {
+            view.frame.origin.y -= view.frame.size.height / 5
+        }
+    }
+    
+    @objc private func keyboardWillHide() {
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
     }
 }
 
