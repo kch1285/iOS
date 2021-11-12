@@ -42,30 +42,45 @@ class SignUpViewController: UIViewController {
     private func alertUserSignUp() {
         let emailField = signUpView.emailField
         let passwordField = signUpView.passwordField
+        let phoneField = signUpView.phoneNumberField
         
-        if let email = emailField.text, let password = passwordField.text, !email.isEmpty, !password.isEmpty {
+        if let email = emailField.text, let password = passwordField.text, let phoneNumber = phoneField.text,
+           !email.isEmpty, !password.isEmpty, !phoneNumber.isEmpty {
             let alert = UIAlertController(title: email, message: "입력하신 이메일로 가입을 진행할까요?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
-                if !email.contains("@") {
+                if let rightEmail = self?.isEmail(email: email), rightEmail == false {
                     self?.alertUserSignUpError(message: "올바른 이메일 형식이 아닙니다.")
+                }
+                
+                if let rightPhoneNumber = self?.isPhone(phoneNumber: phoneNumber), rightPhoneNumber == false {
+                    self?.alertUserSignUpError(message: "올바른 전화번호 형식이 아닙니다.")
                 }
                 else if password.count < 8 {
                     self?.alertUserSignUpError(message: "비밀번호는 8자리 이상이어야 합니다")
                 }
                 else {
-                    // 회원가입 완료!
-                    print("회원가입 !!!")
+                    let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
                     FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
                         guard error == nil else {
                             self?.alertUserSignUpError(message: "이미 존재하는 메일주소입니다. 다시 시도해주세요.")
                             return
                         }
-                        DispatchQueue.main.async {
-                            let vc = ConnectingViewController()
-                            self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-                            self?.navigationController?.navigationBar.isHidden = true
-                            self?.navigationController?.pushViewController(vc, animated: true)
+                        
+                        let user = UserInfo(emailAddress: safeEmail, phoneNumber: phoneNumber)
+                        DatabaseManager.shared.insertUser(with: user) { [weak self] success in
+                            if success {
+                                print("회원가입 성공")
+                                DispatchQueue.main.async {
+                                    let vc = ConnectingViewController()
+                                    self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                                    self?.navigationController?.navigationBar.isHidden = true
+                                    self?.navigationController?.pushViewController(vc, animated: true)
+                                }
+                            }
+                            else {
+                                print("실패")
+                            }
                         }
                     }
                 }
@@ -95,6 +110,16 @@ class SignUpViewController: UIViewController {
     private func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func isPhone(phoneNumber: String) -> Bool {
+        let regex = "^01([0-9])([0-9]{3,4})([0-9]{4})$"
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: phoneNumber)
+    }
+    
+    private func isEmail(email: String) -> Bool {
+        let regex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}$"
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
     }
     
     @objc private func keyboardWillShow() {

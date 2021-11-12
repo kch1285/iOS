@@ -24,7 +24,7 @@ final class SignUpView: UIView {
         return label
     }()
     
-    private let phoneNumberLabel: UILabel = {
+    let phoneNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "전화번호 : "
         label.textColor = .white

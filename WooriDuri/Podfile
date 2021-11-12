@@ -9,5 +9,6 @@ target 'WooriDuri' do
 
 pod 'SnapKit'
 pod 'Firebase/Auth'
+pod 'Firebase/Database'
 
 end

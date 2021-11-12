@@ -18,8 +18,9 @@
 		430B0B6827341EAC00329364 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B0B6727341EAC00329364 /* LoginView.swift */; };
 		4381A911273B96E80053F971 /* ConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381A910273B96E80053F971 /* ConnectingView.swift */; };
 		43BC690A273A8C0F00F1783D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BC6909273A8C0F00F1783D /* GoogleService-Info.plist */; };
-		43BC690C273A8CFC00F1783D /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690B273A8CFC00F1783D /* AuthManager.swift */; };
+		43BC690C273A8CFC00F1783D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690B273A8CFC00F1783D /* DatabaseManager.swift */; };
 		43BC690E273A961000F1783D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690D273A961000F1783D /* SignUpView.swift */; };
+		43CCD70F273E3FC100D53508 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CCD70E273E3FC100D53508 /* UserInfo.swift */; };
 		9A8A6D7C89326719B28CEDEA /* Pods_WooriDuri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA187CF17F8B8867AB16613 /* Pods_WooriDuri.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,8 +39,9 @@
 		430B0B6727341EAC00329364 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4381A910273B96E80053F971 /* ConnectingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingView.swift; sourceTree = "<group>"; };
 		43BC6909273A8C0F00F1783D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		43BC690B273A8CFC00F1783D /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		43BC690B273A8CFC00F1783D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		43BC690D273A961000F1783D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		43CCD70E273E3FC100D53508 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		955D2BD4CE2C1B5EECF1E12A /* Pods-WooriDuri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WooriDuri.release.xcconfig"; path = "Target Support Files/Pods-WooriDuri/Pods-WooriDuri.release.xcconfig"; sourceTree = "<group>"; };
 		CAA187CF17F8B8867AB16613 /* Pods_WooriDuri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WooriDuri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 		430B0B6127341C9C00329364 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				43CCD70E273E3FC100D53508 /* UserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -120,7 +123,7 @@
 				43BC6909273A8C0F00F1783D /* GoogleService-Info.plist */,
 				430B0B442734195400329364 /* AppDelegate.swift */,
 				430B0B462734195400329364 /* SceneDelegate.swift */,
-				43BC690B273A8CFC00F1783D /* AuthManager.swift */,
+				43BC690B273A8CFC00F1783D /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -277,13 +280,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				430B0B6827341EAC00329364 /* LoginView.swift in Sources */,
-				43BC690C273A8CFC00F1783D /* AuthManager.swift in Sources */,
+				43BC690C273A8CFC00F1783D /* DatabaseManager.swift in Sources */,
 				430B0B5E27341C4F00329364 /* LoginViewController.swift in Sources */,
 				430B0B492734195400329364 /* ConnectingViewController.swift in Sources */,
 				43BC690E273A961000F1783D /* SignUpView.swift in Sources */,
 				430B0B452734195400329364 /* AppDelegate.swift in Sources */,
 				430B0B472734195400329364 /* SceneDelegate.swift in Sources */,
 				430B0B6627341D1B00329364 /* SignUpViewController.swift in Sources */,
+				43CCD70F273E3FC100D53508 /* UserInfo.swift in Sources */,
 				4381A911273B96E80053F971 /* ConnectingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
