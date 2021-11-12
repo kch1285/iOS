@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import FirebaseAuth
 
+
 class LoginViewController: UIViewController {
     
     private let loginView = LoginView()
@@ -17,6 +18,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         checkUserLogin()
         setUpLoginView()
+        NotificationManager.requestNotificationAuthorization()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +83,7 @@ class LoginViewController: UIViewController {
         }
     }
 }
+//MARK: - LoginViewDelegate
 
 extension LoginViewController: LoginViewDelegate {
     func loginButtonPressed() {

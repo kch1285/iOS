@@ -21,6 +21,7 @@
 		43BC690C273A8CFC00F1783D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690B273A8CFC00F1783D /* DatabaseManager.swift */; };
 		43BC690E273A961000F1783D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC690D273A961000F1783D /* SignUpView.swift */; };
 		43CCD70F273E3FC100D53508 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CCD70E273E3FC100D53508 /* UserInfo.swift */; };
+		43CCD711273E5DC200D53508 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CCD710273E5DC200D53508 /* NotificationManager.swift */; };
 		9A8A6D7C89326719B28CEDEA /* Pods_WooriDuri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA187CF17F8B8867AB16613 /* Pods_WooriDuri.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		43BC690B273A8CFC00F1783D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		43BC690D273A961000F1783D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		43CCD70E273E3FC100D53508 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		43CCD710273E5DC200D53508 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		955D2BD4CE2C1B5EECF1E12A /* Pods-WooriDuri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WooriDuri.release.xcconfig"; path = "Target Support Files/Pods-WooriDuri/Pods-WooriDuri.release.xcconfig"; sourceTree = "<group>"; };
 		CAA187CF17F8B8867AB16613 /* Pods_WooriDuri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WooriDuri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -124,6 +126,7 @@
 				430B0B442734195400329364 /* AppDelegate.swift */,
 				430B0B462734195400329364 /* SceneDelegate.swift */,
 				43BC690B273A8CFC00F1783D /* DatabaseManager.swift */,
+				43CCD710273E5DC200D53508 /* NotificationManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				43BC690C273A8CFC00F1783D /* DatabaseManager.swift in Sources */,
 				430B0B5E27341C4F00329364 /* LoginViewController.swift in Sources */,
 				430B0B492734195400329364 /* ConnectingViewController.swift in Sources */,
+				43CCD711273E5DC200D53508 /* NotificationManager.swift in Sources */,
 				43BC690E273A961000F1783D /* SignUpView.swift in Sources */,
 				430B0B452734195400329364 /* AppDelegate.swift in Sources */,
 				430B0B472734195400329364 /* SceneDelegate.swift in Sources */,
