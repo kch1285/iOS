@@ -10,8 +10,10 @@ import UIKit
 class CalculateViewController: UIViewController {
 
     private let calculateView = CalculateView()
-    var height = 1.5
-    var weight = 100
+    var bmiBrain = BMIBrain()
+    
+    var height: Double = 1.5
+    var weight: Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,13 +46,12 @@ extension CalculateViewController: CalculateViewDelegate {
     
 
     func calculate() {
-        let bmi: Double
-        if height == 0 {
-            bmi = 0
-        }
-        else {
-            bmi = Double(weight) / pow(height, 2)
-        }
-        print(bmi)
+        bmiBrain.calculateBMI(height: height, weight: weight)
+        
+        let resultVC = ResultViewController()
+        resultVC.bmiValue = bmiBrain.getBMIValue()
+        resultVC.advice = bmiBrain.getAdvice()
+        resultVC.color = bmiBrain.getColor()
+        present(resultVC, animated: true, completion: nil)
     }
 }
