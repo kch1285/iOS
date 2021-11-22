@@ -23,12 +23,13 @@ class WeatherView: UIView {
         return button
     }()
     
-    private let searchTextField: UITextField = {
+    let searchTextField: UITextField = {
         let field = UITextField()
         field.textAlignment = .center
         field.placeholder = "검색"
         field.borderStyle = .roundedRect
         field.font = .systemFont(ofSize: 25)
+        field.returnKeyType = .go
         return field
     }()
     
@@ -82,6 +83,8 @@ class WeatherView: UIView {
         addSubview(currentLocationButton)
         addSubview(searchTextField)
         addSubview(searchButton)
+        searchButton.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
+        
         addSubview(weatherImageView)
         addSubview(temperatureLabel)
         addSubview(cityLabel)
@@ -125,5 +128,9 @@ class WeatherView: UIView {
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
             make.trailing.equalTo(temperatureLabel)
         }
+    }
+    
+    @objc private func didTapSearchButton() {
+        searchTextField.endEditing(true)
     }
 }
