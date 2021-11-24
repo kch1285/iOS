@@ -8,7 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol WeatherViewDelegate: AnyObject {
+    func getCurrentLocation()
+}
+
 class WeatherView: UIView {
+    weak var delegate: WeatherViewDelegate?
+    
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "background")
@@ -26,7 +32,7 @@ class WeatherView: UIView {
     let searchTextField: UITextField = {
         let field = UITextField()
         field.textAlignment = .center
-        field.placeholder = "검색"
+        field.placeholder = "Search"
         field.borderStyle = .roundedRect
         field.font = .systemFont(ofSize: 25)
         field.returnKeyType = .go
@@ -40,7 +46,7 @@ class WeatherView: UIView {
         return button
     }()
     
-    private let weatherImageView: UIImageView = {
+    let weatherImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "sun.max")
         imageView.tintColor = .label
@@ -48,17 +54,49 @@ class WeatherView: UIView {
         return imageView
     }()
     
-    private let temperatureLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "21°C"
-        label.font = .systemFont(ofSize: 80)
+        label.text = ""
+        label.font = .systemFont(ofSize: 20)
         label.textColor = .label
         return label
     }()
     
-    private let cityLabel: UILabel = {
+    let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "London"
+        label.text = "21°C"
+        label.font = .systemFont(ofSize: 60)
+        label.textColor = .label
+        return label
+    }()
+    
+    let feelsLikeTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Feels like "
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .label
+        return label
+    }()
+    
+    let minTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Min "
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .label
+        return label
+    }()
+    
+    let maxTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Max "
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .label
+        return label
+    }()
+    
+    let cityLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Seoul"
         label.font = .systemFont(ofSize: 30)
         label.textColor = .label
         return label
@@ -81,12 +119,20 @@ class WeatherView: UIView {
     private func setUpViews() {
         addSubview(backgroundImageView)
         addSubview(currentLocationButton)
+        currentLocationButton.addTarget(self, action: #selector(didTapCurrentLocationButton), for: .touchUpInside)
+        
         addSubview(searchTextField)
         addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
         
         addSubview(weatherImageView)
+        addSubview(descriptionLabel)
+        
         addSubview(temperatureLabel)
+        addSubview(feelsLikeTemperatureLabel)
+        addSubview(minTemperatureLabel)
+        addSubview(maxTemperatureLabel)
+        
         addSubview(cityLabel)
     }
     
@@ -119,18 +165,42 @@ class WeatherView: UIView {
             make.trailing.equalTo(searchButton)
         }
         
+        descriptionLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(weatherImageView)
+            make.top.equalTo(weatherImageView.snp.bottom).offset(5)
+        }
+        
         temperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(weatherImageView.snp.bottom).offset(10)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(10)
             make.trailing.equalTo(weatherImageView)
         }
         
+        feelsLikeTemperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(temperatureLabel)
+        }
+        
+        minTemperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(feelsLikeTemperatureLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(temperatureLabel)
+        }
+        
+        maxTemperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(minTemperatureLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(temperatureLabel)
+        }
+        
         cityLabel.snp.makeConstraints { make in
-            make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
+            make.top.equalTo(maxTemperatureLabel.snp.bottom).offset(10)
             make.trailing.equalTo(temperatureLabel)
         }
     }
     
     @objc private func didTapSearchButton() {
         searchTextField.endEditing(true)
+    }
+    
+    @objc private func didTapCurrentLocationButton() {
+        delegate?.getCurrentLocation()
     }
 }
