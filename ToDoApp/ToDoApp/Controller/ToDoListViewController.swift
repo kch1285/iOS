@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class ToDoListViewController: UIViewController {
     private var toDoListArray: [ToDoListModel] = []
     // 커스텀 타입은 UserDefaults에 저장 안됨
-    private let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private let toDoListTableView: UITableView = {
         let tableview = UITableView()
@@ -45,11 +46,8 @@ class ToDoListViewController: UIViewController {
     }
     
     private func saveItems() {
-        let encoder = PropertyListEncoder()
-        
         do {
-            let data = try encoder.encode(toDoListArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         }
         catch {
             print(error.localizedDescription)
@@ -58,14 +56,12 @@ class ToDoListViewController: UIViewController {
     }
     
     private func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                toDoListArray = try decoder.decode([ToDoListModel].self, from: data)
-            }
-            catch {
-                print(error.localizedDescription)
-            }
+        let request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()
+        do {
+            toDoListArray = try context.fetch(request)
+        }
+        catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -76,7 +72,11 @@ class ToDoListViewController: UIViewController {
             guard let item = textField.text, item != "" else {
                 return
             }
-            let newItem = ToDoListModel(title: item)
+
+            let newItem = ToDoListModel(context: self!.context)
+            newItem.title = item
+            newItem.checked = false
+            
             self?.toDoListArray.append(newItem)
             self?.saveItems()
         }
@@ -109,6 +109,11 @@ extension ToDoListViewController: UITableViewDataSource {
 extension ToDoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        /// 테이블과 CoreData에서 삭제
+        /// context.delete(toDoListArray[indexPath.row])
+        /// toDoListArray.remove(at: indexPath.row)
+        
         toDoListArray[indexPath.row].checked = !toDoListArray[indexPath.row].checked
         saveItems()
     }
