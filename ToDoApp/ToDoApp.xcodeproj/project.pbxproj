@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		43A2D4EA27732D6B0058A74F /* ToDoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A2D4E927732D6B0058A74F /* ToDoListTableViewCell.swift */; };
 		43A2D4EC277447010058A74F /* UIViewEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A2D4EB277447010058A74F /* UIViewEx.swift */; };
-		43A2D5142774861D0058A74F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43A2D5122774861D0058A74F /* DataModel.xcdatamodeld */; };
 		43BEC45E2775E74500BF731D /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BEC45D2775E74500BF731D /* CategoryViewController.swift */; };
 		43BEC4612775E7B700BF731D /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BEC4602775E7B700BF731D /* CategoryTableViewCell.swift */; };
 		43C31BC627732514006ACCAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C31BC527732514006ACCAF /* AppDelegate.swift */; };
@@ -18,6 +17,8 @@
 		43C31BCD27732514006ACCAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C31BCB27732514006ACCAF /* Main.storyboard */; };
 		43C31BCF27732517006ACCAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43C31BCE27732517006ACCAF /* Assets.xcassets */; };
 		43C31BD227732517006ACCAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C31BD027732517006ACCAF /* LaunchScreen.storyboard */; };
+		43E02353277AD7C500F3968B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E02352277AD7C500F3968B /* Item.swift */; };
+		43E02355277AD7D000F3968B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E02354277AD7D000F3968B /* Category.swift */; };
 		6EEC548E84F3C61059C65C28 /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0691EF5810FAFCC77AC5C1DB /* Pods_ToDoApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +27,6 @@
 		0820CDAC56D2B8AF2E98D002 /* Pods-ToDoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.release.xcconfig"; sourceTree = "<group>"; };
 		43A2D4E927732D6B0058A74F /* ToDoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListTableViewCell.swift; sourceTree = "<group>"; };
 		43A2D4EB277447010058A74F /* UIViewEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewEx.swift; sourceTree = "<group>"; };
-		43A2D5132774861D0058A74F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		43BEC45D2775E74500BF731D /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		43BEC4602775E7B700BF731D /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		43C31BC227732514006ACCAF /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +37,8 @@
 		43C31BCE27732517006ACCAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43C31BD127732517006ACCAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43C31BD327732517006ACCAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43E02352277AD7C500F3968B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		43E02354277AD7D000F3968B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		54A02B0F6FFB269884C80A1F /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +66,8 @@
 		43A2D5152774863D0058A74F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				43A2D5122774861D0058A74F /* DataModel.xcdatamodeld */,
+				43E02354277AD7D000F3968B /* Category.swift */,
+				43E02352277AD7C500F3968B /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,8 +251,9 @@
 				43C31BCA27732514006ACCAF /* ToDoListViewController.swift in Sources */,
 				43A2D4EC277447010058A74F /* UIViewEx.swift in Sources */,
 				43BEC45E2775E74500BF731D /* CategoryViewController.swift in Sources */,
-				43A2D5142774861D0058A74F /* DataModel.xcdatamodeld in Sources */,
 				43C31BC627732514006ACCAF /* AppDelegate.swift in Sources */,
+				43E02353277AD7C500F3968B /* Item.swift in Sources */,
+				43E02355277AD7D000F3968B /* Category.swift in Sources */,
 				43C31BC827732514006ACCAF /* SceneDelegate.swift in Sources */,
 				43A2D4EA27732D6B0058A74F /* ToDoListTableViewCell.swift in Sources */,
 				43BEC4612775E7B700BF731D /* CategoryTableViewCell.swift in Sources */,
@@ -476,19 +480,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		43A2D5122774861D0058A74F /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				43A2D5132774861D0058A74F /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 43A2D5132774861D0058A74F /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 43C31BBA27732514006ACCAF /* Project object */;
 }

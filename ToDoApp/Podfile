@@ -8,4 +8,6 @@ target 'ToDoApp' do
   # Pods for ToDoApp
 
 pod 'SnapKit'
+pod 'RealmSwift'
+
 end

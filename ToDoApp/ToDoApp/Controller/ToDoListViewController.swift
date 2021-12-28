@@ -7,12 +7,11 @@
 
 import UIKit
 import SnapKit
-import CoreData
+import RealmSwift
 
 class ToDoListViewController: UIViewController {
-    private var toDoListArray: [ToDoListModel] = []
-    // 커스텀 타입은 UserDefaults에 저장 안됨
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var toDoListArray: Results<Item>?
+    private let realm = try! Realm()
     var selectedCategory: Category? {
         didSet {
             loadItems()
@@ -37,7 +36,6 @@ class ToDoListViewController: UIViewController {
         
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print("222")
     }
     
     private func setUpNavagationBar() {
@@ -56,32 +54,24 @@ class ToDoListViewController: UIViewController {
         }
     }
     
-    private func saveItems() {
-        do {
-            try context.save()
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-        toDoListTableView.reloadData()
-    }
-    
-    private func loadItems(with request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest(), predicate: NSPredicate? = nil) {
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory?.name as! CVarArg)
-        
-        if let predicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
-        }
-        else {
-            request.predicate = categoryPredicate
-        }
-        
-        do {
-            toDoListArray = try context.fetch(request)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
+    private func loadItems() {
+        toDoListArray = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
+        /// Realm을 사용하면 밑의 CoreData를 사용했을 때의 긴 라인을 위의 한 라인으로 대체할 수 있다.
+//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory?.name as! CVarArg)
+//
+//        if let predicate = predicate {
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
+//        }
+//        else {
+//            request.predicate = categoryPredicate
+//        }
+//
+//        do {
+//            toDoListArray = try context.fetch(request)
+//        }
+//        catch {
+//            print(error.localizedDescription)
+//        }
         toDoListTableView.reloadData()
     }
     
@@ -93,13 +83,20 @@ class ToDoListViewController: UIViewController {
                 return
             }
             
-            let newItem = ToDoListModel(context: self!.context)
-            newItem.title = item
-            newItem.checked = false
-            newItem.parentCategory = self?.selectedCategory
-            
-            self?.toDoListArray.append(newItem)
-            self?.saveItems()
+            if let currentCategory = self?.selectedCategory {
+                do {
+                    try self?.realm.write({
+                        let newItem = Item()
+                        newItem.title = item
+                        newItem.dateCreated = Date()
+                        currentCategory.items.append(newItem)
+                    })
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+            self?.toDoListTableView.reloadData()
         }
         
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
@@ -119,13 +116,15 @@ class ToDoListViewController: UIViewController {
 //MARK: - UITableViewDataSource
 extension ToDoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDoListArray.count
+        return toDoListArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToDoListTableViewCell.identifier, for: indexPath)
-        cell.textLabel?.text = toDoListArray[indexPath.row].title
-        cell.accessoryType = toDoListArray[indexPath.row].checked ? .checkmark : .none
+        if let item = toDoListArray?[indexPath.row] {
+            cell.textLabel?.text = item.title
+            cell.accessoryType = item.checked ? .checkmark : .none
+        }
         
         return cell
     }
@@ -160,8 +159,22 @@ extension ToDoListViewController: UITableViewDelegate {
         /// context.delete(toDoListArray[indexPath.row])
         /// toDoListArray.remove(at: indexPath.row)
         
-        toDoListArray[indexPath.row].checked = !toDoListArray[indexPath.row].checked
-        saveItems()
+        //toDoListArray?[indexPath.row].checked = !toDoListArray[indexPath.row].checked
+        if let item = toDoListArray?[indexPath.row] {
+            do {
+                try realm.write({
+                    item.checked = !item.checked
+                    
+                    /// realm의 데이터를 지우고싶다면
+                    /// realm.write 로 update하고, delete로 지우기 (wirte 블록 안에 작성 )
+                    // realm.delete(item)
+                })
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        tableView.reloadData()
     }
 }
 
@@ -171,17 +184,19 @@ extension ToDoListViewController: UISearchBarDelegate {
         guard let text = searchBar.text, text != "" else {
             return
         }
-        
-        let request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        loadItems(with: request, predicate: predicate)
+
+//        let request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()
+//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        loadItems(with: request, predicate: predicate)
+        /// 위의 라인들을 Realm을 사용하여 밑의 한 라인으로 사용가능
+        toDoListArray = toDoListArray?.filter("title CONTAINS[cd] %@", text).sorted(byKeyPath: "dateCreated", ascending: true)
+        toDoListTableView.reloadData()
         DispatchQueue.main.async {
             searchBar.resignFirstResponder()
         }
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == "" {
             loadItems()

@@ -7,11 +7,11 @@
 
 import UIKit
 import SnapKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UIViewController {
-    private var categories: [`Category`] = []
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var categories: Results<Category>?
+    private let realm = try! Realm()
     
     private let categoryTableView: UITableView = {
         let tableView = UITableView()
@@ -44,9 +44,11 @@ class CategoryViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = .label
     }
     
-    private func saveCategories() {
+    private func save(category: Category) {
         do {
-            try context.save()
+            try realm.write({
+                realm.add(category)
+            })
         }
         catch {
             print(error.localizedDescription)
@@ -55,13 +57,16 @@ class CategoryViewController: UIViewController {
     }
     
     private func loadCategories() {
-        let request: NSFetchRequest<Category> = Category.fetchRequest()
-        do {
-            categories = try context.fetch(request)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
+        categories = realm.objects(Category.self)
+        /// Realm을 사용하면 밑의 CoreData를 사용했을 때의 긴 라인을 위의 한 라인으로 대체할 수 있다.
+//        let request: NSFetchRequest<Category> = Category.fetchRequest()
+//        do {
+//            categories = try context.fetch(request)
+//        }
+//        catch {
+//            print(error.localizedDescription)
+//        }
+        
         categoryTableView.reloadData()
     }
     
@@ -73,10 +78,11 @@ class CategoryViewController: UIViewController {
                 return
             }
             
-            let newCategory = Category(context: self!.context)
+            let newCategory = Category()
             newCategory.name = item
-            self?.categories.append(newCategory)
-            self?.saveCategories()
+            /// Results 타입은 auto-updating container type이므로 append 필요 없음
+//            self?.categories.append(newCategory)
+            self?.save(category: newCategory)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
@@ -96,12 +102,12 @@ class CategoryViewController: UIViewController {
 //MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return categories?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.text = categories?[indexPath.row].name
         return cell
     }
 }
@@ -111,7 +117,7 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let vc = ToDoListViewController()
-        vc.selectedCategory = categories[indexPath.row]
+        vc.selectedCategory = categories?[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }
