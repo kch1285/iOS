@@ -13,11 +13,18 @@ class ToDoListViewController: UIViewController {
     private var toDoListArray: [ToDoListModel] = []
     // 커스텀 타입은 UserDefaults에 저장 안됨
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var selectedCategory: Category? {
+        didSet {
+            loadItems()
+        }
+    }
+    private let toDoSearchBar = UISearchBar()
     
     private let toDoListTableView: UITableView = {
         let tableview = UITableView()
         tableview.register(ToDoListTableViewCell.self, forCellReuseIdentifier: ToDoListTableViewCell.identifier)
         tableview.backgroundColor = .clear
+        tableview.keyboardDismissMode = .onDrag
         return tableview
     }()
     
@@ -26,20 +33,20 @@ class ToDoListViewController: UIViewController {
         
         setUpTableView()
         setUpNavagationBar()
-        loadItems()
     }
         
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         print("222")
     }
+    
     private func setUpNavagationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem?.tintColor = .label
     }
     
     private func setUpTableView() {
-        title = "To Do List"
+        title = "Items"
         view.setGradient(colors: [UIColor(named: "gradient_start")!.cgColor, UIColor(named: "gradient_end")!.cgColor])
         view.addSubview(toDoListTableView)
         toDoListTableView.dataSource = self
@@ -59,7 +66,16 @@ class ToDoListViewController: UIViewController {
         toDoListTableView.reloadData()
     }
     
-    private func loadItems(with request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()) {
+    private func loadItems(with request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest(), predicate: NSPredicate? = nil) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory?.name as! CVarArg)
+        
+        if let predicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
+        }
+        else {
+            request.predicate = categoryPredicate
+        }
+        
         do {
             toDoListArray = try context.fetch(request)
         }
@@ -80,6 +96,7 @@ class ToDoListViewController: UIViewController {
             let newItem = ToDoListModel(context: self!.context)
             newItem.title = item
             newItem.checked = false
+            newItem.parentCategory = self?.selectedCategory
             
             self?.toDoListArray.append(newItem)
             self?.saveItems()
@@ -106,7 +123,7 @@ extension ToDoListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ToDoListTableViewCell.identifier, for: indexPath) as! ToDoListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ToDoListTableViewCell.identifier, for: indexPath)
         cell.textLabel?.text = toDoListArray[indexPath.row].title
         cell.accessoryType = toDoListArray[indexPath.row].checked ? .checkmark : .none
         
@@ -115,12 +132,12 @@ extension ToDoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60))
-        let searchBar = UISearchBar()
-        searchBar.searchBarStyle = .minimal
-        searchBar.delegate = self
+
+        toDoSearchBar.searchBarStyle = .minimal
+        toDoSearchBar.delegate = self
         
-        headerView.addSubview(searchBar)
-        searchBar.snp.makeConstraints { make in
+        headerView.addSubview(toDoSearchBar)
+        toDoSearchBar.snp.makeConstraints { make in
             make.leading.trailing.equalTo(headerView).inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
             make.centerY.equalTo(headerView)
             make.height.equalTo(60)
@@ -138,7 +155,7 @@ extension ToDoListViewController: UITableViewDataSource {
 extension ToDoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        view.endEditing(true)
         /// 테이블과 CoreData에서 삭제
         /// context.delete(toDoListArray[indexPath.row])
         /// toDoListArray.remove(at: indexPath.row)
@@ -156,10 +173,10 @@ extension ToDoListViewController: UISearchBarDelegate {
         }
         
         let request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
         DispatchQueue.main.async {
             searchBar.resignFirstResponder()
         }

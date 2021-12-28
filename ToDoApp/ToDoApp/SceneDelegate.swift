@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        let vc = ToDoListViewController()
+        let vc = CategoryViewController()
         let navVC = UINavigationController(rootViewController: vc)
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
