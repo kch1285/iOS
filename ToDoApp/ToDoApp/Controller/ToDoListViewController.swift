@@ -44,7 +44,7 @@ class ToDoListViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        title = "Items"
+        title = selectedCategory?.name
         view.setGradient(colors: [UIColor(named: "gradient_start")!.cgColor, UIColor(named: "gradient_end")!.cgColor])
         view.addSubview(toDoListTableView)
         toDoListTableView.dataSource = self

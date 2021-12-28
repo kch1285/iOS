@@ -112,17 +112,25 @@
 		43C31BC427732514006ACCAF /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				43E02356277B01E600F3968B /* Resources */,
 				43A2D516277486500058A74F /* Controller */,
 				43A2D5152774863D0058A74F /* Model */,
-				43C31BC527732514006ACCAF /* AppDelegate.swift */,
-				43C31BC727732514006ACCAF /* SceneDelegate.swift */,
-				43A2D4EB277447010058A74F /* UIViewEx.swift */,
 				43C31BCB27732514006ACCAF /* Main.storyboard */,
 				43C31BCE27732517006ACCAF /* Assets.xcassets */,
 				43C31BD027732517006ACCAF /* LaunchScreen.storyboard */,
 				43C31BD327732517006ACCAF /* Info.plist */,
 			);
 			path = ToDoApp;
+			sourceTree = "<group>";
+		};
+		43E02356277B01E600F3968B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				43C31BC527732514006ACCAF /* AppDelegate.swift */,
+				43C31BC727732514006ACCAF /* SceneDelegate.swift */,
+				43A2D4EB277447010058A74F /* UIViewEx.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A0B91D42606805541AACC958 /* Frameworks */ = {

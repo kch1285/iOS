@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import RealmSwift
+import SwipeCellKit
+import ChameleonFramework
 
 class CategoryViewController: UIViewController {
     private var categories: Results<Category>?
@@ -15,8 +17,10 @@ class CategoryViewController: UIViewController {
     
     private let categoryTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+      //  tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: "CategoryTableViewCell")
         tableView.backgroundColor = .clear
+        tableView.rowHeight = 80
         return tableView
     }()
     
@@ -40,6 +44,7 @@ class CategoryViewController: UIViewController {
     }
     
     private func setUpNavagationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem?.tintColor = .label
     }
@@ -80,6 +85,7 @@ class CategoryViewController: UIViewController {
             
             let newCategory = Category()
             newCategory.name = item
+            newCategory.color = UIColor.randomFlat().hexValue()
             /// Results 타입은 auto-updating container type이므로 append 필요 없음
 //            self?.categories.append(newCategory)
             self?.save(category: newCategory)
@@ -106,8 +112,10 @@ extension CategoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath) as! SwipeTableViewCell
+        cell.delegate = self
         cell.textLabel?.text = categories?[indexPath.row].name
+        cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].color ?? "FFFFFF")
         return cell
     }
 }
@@ -119,5 +127,35 @@ extension CategoryViewController: UITableViewDelegate {
         let vc = ToDoListViewController()
         vc.selectedCategory = categories?[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+//MARK: - SwipeTableViewCellDelegate
+extension CategoryViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] action, indexPath in
+            if let deleteCategory = self?.categories?[indexPath.row] {
+                do {
+                    try self?.realm.write {
+                        self?.realm.delete(deleteCategory)
+                    }
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete-circle")
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
     }
 }
